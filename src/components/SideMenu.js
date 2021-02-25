@@ -1,26 +1,28 @@
 import React, {useState} from 'react'
-import {withStyles} from '@material-ui/core';
-import {BrowserRouter as Link} from 'react-router-dom'; 
+import {Link} from 'react-router-dom'; 
 import * as AiIcons from 'react-icons/ai';
-import MenuIcon from '@material-ui/icons/Menu';
+import * as FaIcons from 'react-icons/fa';
 import {SideMenuData} from './SideMenuData';
 import './SideMenu.css';
+import {IconContext} from 'react-icons'
 
 function SideMenu(){
     const [sidebar, setSidebar] = useState(false);
 
-    const showSidebar = () => setSidebar(!sidebar);
+    const mostrarSidebar = () => setSidebar(!sidebar);
+
     return(
         <>
-            <div className = "sidebar">
-                <Link to = "#" className = 'menu-bars'>
-                    <MenuIcon onClick = {showSidebar}/>
+        <IconContext.Provider value = {{color: '#fff'}}>
+            <div className = 'navbar'>
+                <Link to = '#' className = 'menu-bars'>
+                    <FaIcons.FaBars onClick={mostrarSidebar} />
                 </Link>
             </div>
-            <nav className = { sidebar ? 'nav-menu active' : "nav-menu"}>
-                <ul className = 'nav-menu-items'>
-                    <li className = "navbar-toggle">
-                        <Link to = "#" className = 'menu-bars'>
+            <nav className = { sidebar ? 'nav-menu active' : 'nav-menu'}>
+                <ul className = 'nav-menu-items' onClick = {mostrarSidebar}>
+                    <li className = 'navbar-toggle'>
+                        <Link to = '#' className = 'menu-bars'>
                             <AiIcons.AiOutlineClose />
                         </Link>     
                    </li>
@@ -38,6 +40,7 @@ function SideMenu(){
                    })}
                 </ul>
             </nav>
+            </IconContext.Provider>
         </>
     )
 }

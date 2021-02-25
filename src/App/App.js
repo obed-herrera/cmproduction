@@ -4,7 +4,9 @@ import SideMenu from "../components/SideMenu";
 import {CssBaseline, makeStyles, ThemeProvider, createMuiTheme} from '@material-ui/core';
 import Header from "../components/Header";
 import PageHeader from "../components/PageHeader";
+import Home from '../pages/Home/Home';
 import Client from '../pages/Clients/Client';
+import Loan from '../pages/Loans/Loan';
 import Employee from "../pages/Employees/Employee";
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -51,16 +53,17 @@ function App(){
   const classes = useStyles();
   return(
     <ThemeProvider theme = {theme}>
+      <Header />
       <Router>
         <SideMenu />
         <Switch>
           <Route path = '/employee' component = {Employee}/>
-          <Route path = '/clients' component = {Client}/>
+          <Route path = '/client' component = {Client}/>
+          <Route path = '/home' component = {Home}/>
+          <Route path = '/loan' component = {Loan}/>
         </Switch>
       </Router>
-    <div className = {classes.appMain}>
-      <Header />
-      <Employee />    
+    <div className = {classes.appMain}>    
     </div>
     <CssBaseline />
     </ThemeProvider>

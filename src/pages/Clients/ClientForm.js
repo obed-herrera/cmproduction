@@ -5,7 +5,7 @@ import * as employeeServices from '../../services/employeeServices';
 
 import Controls from "../../controls/Controls";
 
-const employeeState = [
+const clientState = [
     {id: 'activo', title: 'Activo'},
     {id: 'inactivo', title: 'Inactivo'},
 ]
@@ -25,7 +25,7 @@ const initialFValues ={
     Employee_State:'Activo'
 }
 
-export default function EmployeeForm(){
+export default function ClientForm(){
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -134,7 +134,7 @@ export default function EmployeeForm(){
                     label = "Estado"
                     value = {values.Employee_State}
                     onChange = {handleInputChange}
-                    items = {employeeState}
+                    items = {clientState}
                     error = {errors.Employee_Address}/>
                     
                 </Grid>
