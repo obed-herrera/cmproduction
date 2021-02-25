@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
+
 .App {
   text-align: center;
 }
@@ -35,4 +37,23 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.btn{
+  font-size: 21px;
+  padding: 5px 20px;
+  border: 0;
+  background-color: #3489db;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+}
+
+.btn:hover{
+  background-color: #2386c8;
+}
+
+.btn:focus{
+  outline: none;
 }
