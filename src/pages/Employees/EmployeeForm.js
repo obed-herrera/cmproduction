@@ -11,7 +11,7 @@ const employeeState = [
 ]
 
 const initialFValues ={
-    ID_Employee:0,
+    ID_Employee: 0,
     Employee_First_Name:'',
     Employee_Second_Name:'',
     Employee_Middle_Name:'',
@@ -50,7 +50,7 @@ export default function EmployeeForm(){
         })
 
         if(fieldValues == values)
-            return Object.values(temp).every(x => x === "")
+            return Object.values(temp).every(x => x == "")
     }
 
     const{
@@ -135,7 +135,7 @@ export default function EmployeeForm(){
                     value = {values.Employee_State}
                     onChange = {handleInputChange}
                     items = {employeeState}
-                    error = {errors.Employee_Address}/>
+                    error = {errors.Employee_State}/>
                     
                 </Grid>
                 <Grid item xs = {4}>
@@ -145,6 +145,7 @@ export default function EmployeeForm(){
                     value = {values.Employee_Created_By}
                     onChange={handleInputChange}
                     options = {employeeServices.getPersonCollection()}
+                    error = {errors.Employee_Created_By}
                 />
                 <Controls.Select
                     name = "Employee_Type"
@@ -152,12 +153,14 @@ export default function EmployeeForm(){
                     value = {values.Employee_Type}
                     onChange={handleInputChange}
                     options = {employeeServices.getEmployeeType()}
+                    error = {errors.Employee_Type}
                 />
                 <Controls.DatePicker
                     name = "Employee_Creation_Date"
                     label = "Fecha de Cracion"
                     value = {values.Employee_Creation_Date}
                     onChange = {handleInputChange}
+                    error = {errors.Employee_Creation_Date}
                 />   
 
                 <div>
