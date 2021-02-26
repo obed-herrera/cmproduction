@@ -10,6 +10,7 @@ import Loan from '../pages/Loans/Loan';
 import Employee from "../pages/Employees/Employee";
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+
 const theme = createMuiTheme({
   palette:{
     primary:{
@@ -53,14 +54,17 @@ function App(){
   const classes = useStyles();
   return(
     <ThemeProvider theme = {theme}>
-      <Header />
+      
+      
       <Router>
-        <SideMenu />
+      <SideMenu />
+      <Header />
         <Switch>
           <Route path = '/employee' component = {Employee}/>
           <Route path = '/client' component = {Client}/>
           <Route path = '/home' component = {Home}/>
           <Route path = '/loan' component = {Loan}/>
+
         </Switch>
       </Router>
     <div className = {classes.appMain}>    
