@@ -1,7 +1,7 @@
 import {React, useState} from 'react'
 import LoanForm from "./LoanForm";
 import PageHeader from "../../components/PageHeader";
-import PeopleOutlineTwoToneIcon from '@material-ui/icons/PeopleAltOutlined'
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import {Paper, makeStyles, TableBody, TableRow, TableCell} from '@material-ui/core';
 import Copyright from '../../components/Copyright';
 
@@ -19,9 +19,9 @@ export default function Loan(){
     return(
         <>
         <PageHeader 
-            title ="Prestamo nuevo"
-            subTitle = "Formulario para crear un Prestamo Nuevo"
-            icon = {<PeopleOutlineTwoToneIcon fontSize = "large" />}
+            title ="Préstamo nuevo"
+            subTitle = "Formulario para crear un Préstamo Nuevo"
+            icon = {<AttachMoneyIcon fontSize = "large" />}
         /> 
         <Paper className={classes.pageContent}>
             {<LoanForm />}           

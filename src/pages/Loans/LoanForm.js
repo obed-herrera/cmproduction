@@ -5,7 +5,7 @@ import * as loanServices from '../../services/loanServices';
 
 import Controls from "../../controls/Controls";
 
-const clientState = [
+const loanState = [
     {id: 'activo', title: 'Activo'},
     {id: 'inactivo', title: 'Inactivo'},
 ]
@@ -16,9 +16,9 @@ const initialFValues ={
     Loan_Mount: '',
     Loan_Interest: '',
     Loan_Term: '',
-    Loan_Delivery_Date: '',
-    Loan_Initial_Date: '',
-    Loan_End_Date:'',
+    Loan_Delivery_Date: new Date(),
+    Loan_Initial_Date: new Date(),
+    Loan_End_Date: new Date(),
     Loan_Cuota: '',
     Loan_Created_By: '',
     Loan_State:'Activo'
@@ -70,7 +70,7 @@ export default function LoanForm(){
     return(
         <Form onSubmit = {handleSubmit}>
             <Typography>
-                    Ingrese los datos del prestamo
+                    Ingrese los datos del préstamo
                 </Typography>
             <Grid container>
                 <Grid item xs ={4}>
@@ -83,75 +83,54 @@ export default function LoanForm(){
                 />
                     <Controls.Input 
                         name = "Loan_Mount"
-                        label = "Monto"
+                        label = "Monto del Préstamo"
                         value = {values.Loan_Mount}
                         onChange = {handleInputChange}
                         error = {errors.Loan_Mount}
                     />
                     <Controls.Input 
-                        name = "Client_Second_Name"
-                        label = "Segundo Nombre"
-                        value = {values.Client_Second_Name}
+                        name = "Loan_Interest"
+                        label = "Interes del Préstamo"
+                        value = {values.Loan_Interest}
                         onChange = {handleInputChange}
-                        error = {errors.Client_Second_Name}
+                        error = {errors.Loan_Interest}
                     />
-                    <Controls.Input 
-                        name = "Client_Middle_Name"
-                        label = "Primer Apellido"
-                        value = {values.Client_Middle_Name}
-                        onChange = {handleInputChange}
-                        error = {errors.Client_Middle_Name}
-                    />
-                    <Controls.Input 
-                        name = "Client_Last_Name"
-                        label = "Segundo Apellido"
-                        value = {values.Client_Last_Name}
-                        onChange = {handleInputChange}
-                        error = {errors.ClientClient_Last_Name}
-                    />
+                    <Controls.Select
+                    name = "Loan_Term"
+                    label = "Plazo del Préstamo"
+                    value = {values.Loan_Term}
+                    onChange={handleInputChange}
+                    options = {loanServices.getLoanTerms()}
+                />
                 </Grid>
                 <Grid item xs ={4}>
-                    <TextField
-                        variant = "outlined"
-                        label = "Cédula del Cliente"
-                        name = "Client_National_ID"
-                        value = {values.Client_National_ID}
-                        onChange = {handleInputChange}
-                        error = {errors.Client_National_ID}
-                    />
-                    <TextField
-                        variant = "outlined"
-                        label = "Teléfono / Celular"
-                        name = "Client_Phone"
-                        value = {values.Client_Phone}
-                        onChange = {handleInputChange}
-                        error = {errors.Client_Phone}
-                    />
-                    <TextField
-                        variant = "outlined"
-                        label = "Dirección del Cliente"
-                        name = "Client_Business_Address"
-                        value = {values.Client_Home_Address}
-                        onChange = {handleInputChange}
-                        error = {errors.Client_Home_Address}
-                    />
-                    <TextField
-                        variant = "outlined"
-                        label = "Dirección del Negocio"
-                        name = "Client_Home_Address"
-                        value = {values.Client_Home_Address}
-                        onChange = {handleInputChange}
-                        error = {errors.Client_Home_Address}
-                    />                                      
+                <Controls.DatePicker
+                    name = "Loan_Delivery_Date"
+                    label = "Fecha de Entrega del Préstamo"
+                    value = {values.Loan_Delivery_Date}
+                    onChange = {handleInputChange}
+                /> 
+                <Controls.DatePicker
+                    name = "Loan_Initial_Date"
+                    label = "Fecha de Inicio del Préstamo"
+                    value = {values.Loan_Initial_Date}
+                    onChange = {handleInputChange}
+                /> 
+                <Controls.DatePicker
+                    name = "Loan_End_Date"
+                    label = "Fecha Final del Préstamo"
+                    value = {values.Loan_End_Date}
+                    onChange = {handleInputChange}
+                />                     
                 </Grid>
                 <Grid item xs = {4}>
                 <Controls.RadioGroup
-                    name = "Client_State"
-                    label = "Estado del Cliente"
-                    value = {values.Client_State}
+                    name = "Loan_State"
+                    label = "Estado del Préstamo"
+                    value = {values.Loan_State}
                     onChange = {handleInputChange}
-                    items = {clientState}
-                    error = {errors.Client_Address}/>
+                    items = {loanState}
+                    error = {errors.Loan_State}/>
                 <Controls.Select
                     name = "Loan_Created_By"
                     label = "Creado Por"
@@ -159,20 +138,13 @@ export default function LoanForm(){
                     onChange={handleInputChange}
                     options = {loanServices.getPersonCollection()}
                 />
-                <Controls.DatePicker
-                    name = "Client_Creation_Date"
-                    label = "Fecha de Creación"
-                    value = {values.Client_Creation_Date}
-                    onChange = {handleInputChange}
-                />   
-
                 <div>
                     <Controls.Button
                         type = "submit"
-                        text = "Generar Prestamo"
+                        text = "Generar Préstamo"
                     />
                     <Controls.Button
-                        text = "Cancelar Prestamo"
+                        text = "Cancelar Préstamo"
                         color = "default"
                         onClick = {resetForm}
                     />
