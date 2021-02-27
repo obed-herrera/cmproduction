@@ -41,13 +41,16 @@ export default function ClientForm(){
             temp.Client_Phone = fieldValues.Client_Phone.length > 7 ? "" : "El minimo de caracteres es 9"
         if('Client_National_ID' in fieldValues)
             temp.Client_National_ID = fieldValues.Client_National_ID.length > 15 ? "" : "El minimo de caracteres es 9"
-        if('Client_Address' in fieldValues)
-            temp.Client_Address = fieldValues.Client_Address < 100 ? "" : "El maximo de caraceres es 100"
+        if('Client_Business_Address' in fieldValues)
+            temp.Client_Business_Address = fieldValues.Client_Business_Address < 100 ? "" : "El maximo de caraceres es 100"
+        if('Client_Home_Address' in fieldValues)
+            temp.Client_Home_Address = fieldValues.Client_Home_Address < 100 ? "" : "El maximo de caraceres es 100"
         if('Client_Created_By' in fieldValues)
             temp.Client_Created_By = fieldValues.Client_Created_By.length !== 0 ? "" : "Este campo es necesario"
         setErrors({
             ...temp
         })
+        
 
         if(fieldValues == values)
             return Object.values(temp).every(x => x === "")
@@ -109,7 +112,7 @@ export default function ClientForm(){
                 <Grid item xs ={4}>
                     <TextField
                         variant = "outlined"
-                        label = "Cedula del Cliente"
+                        label = "Cédula del Cliente"
                         name = "Client_National_ID"
                         value = {values.Client_National_ID}
                         onChange = {handleInputChange}
@@ -117,24 +120,28 @@ export default function ClientForm(){
                     />
                     <TextField
                         variant = "outlined"
-                        label = "Telefono / Celular"
+                        label = "Teléfono / Celular"
                         name = "Client_Phone"
                         value = {values.Client_Phone}
                         onChange = {handleInputChange}
                         error = {errors.Client_Phone}
                     />
-                    <FormControl>
-                        <FormLabel>
-                            Dirección del negocio
-                            <TextareaAutosize rowsMin = {3}/>
-                        </FormLabel>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>
-                            Dirección del cliente
-                            <TextareaAutosize rowsMin = {3}/>
-                        </FormLabel>
-                    </FormControl>                                       
+                    <TextField
+                        variant = "outlined"
+                        label = "Dirección del Cliente"
+                        name = "Client_Business_Address"
+                        value = {values.Client_Home_Address}
+                        onChange = {handleInputChange}
+                        error = {errors.Client_Home_Address}
+                    />
+                    <TextField
+                        variant = "outlined"
+                        label = "Dirección del Negocio"
+                        name = "Client_Home_Address"
+                        value = {values.Client_Home_Address}
+                        onChange = {handleInputChange}
+                        error = {errors.Client_Home_Address}
+                    />                                      
                 </Grid>
                 <Grid item xs = {4}>
                 <Controls.RadioGroup
@@ -153,7 +160,7 @@ export default function ClientForm(){
                 />
                 <Controls.DatePicker
                     name = "Client_Creation_Date"
-                    label = "Fecha de Creacion"
+                    label = "Fecha de Creación"
                     value = {values.Client_Creation_Date}
                     onChange = {handleInputChange}
                 />   

@@ -6,6 +6,7 @@ import PeopleOutlineTwoToneIcon from '@material-ui/icons/PeopleAltOutlined'
 import {Paper, makeStyles, TableBody, TableRow, TableCell} from '@material-ui/core';
 import useTable from "../../components/useTable";
 import * as clientServices from "../../services/clientServices";
+import Copyright from '../../components/Copyright';
 
 const useStyle = makeStyles(theme => ({
     pageContent:{
@@ -27,7 +28,7 @@ export default function Client(){
         <>
         <PageHeader 
             title ="Cliente nuevo"
-            subTitle = "Esta vista esta destinada para la administracion de los clientes"
+            subTitle = "Formulario para crear un Cliente Nuevo"
             icon = {<PeopleOutlineTwoToneIcon fontSize = "large" />}
         /> 
         <Paper className={classes.pageContent}>
@@ -54,7 +55,9 @@ export default function Client(){
                     }
                 </TableBody>
             </TblContainer>
-        </Paper>  
+            
+        </Paper>
+        <Copyright/>  
         </>
     )
 }

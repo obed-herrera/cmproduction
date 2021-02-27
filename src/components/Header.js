@@ -4,6 +4,7 @@ import inputBase from '@material-ui/core';
 import Today from '@material-ui/icons/Today';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 //import makeStyles from '@material-ui/core/styles';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles(theme=>({
     root:{
@@ -29,9 +30,11 @@ export default function Header(){
                     <IconButton>
                         <Today />
                     </IconButton>
-                    <IconButton>
-                        <PowerSettingsNewIcon />
-                    </IconButton>
+                    <Link to = '/login'>
+                        <IconButton >
+                            <PowerSettingsNewIcon  />
+                        </IconButton>
+                    </Link>
                     </Grid>
                 </Grid>
             </Toolbar>

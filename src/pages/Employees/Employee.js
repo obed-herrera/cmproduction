@@ -14,25 +14,34 @@ const useStyle = makeStyles(theme => ({
     }
 }))
 
+const headCells = [
+    {id: 'Employee_First_Name', label: 'Primer Nombre'},
+    {id: 'Employee_Second_Name', label: 'Segundo Nombre'},
+    {id: 'Employee_Middle_Name', label: 'Primer Apellido'},
+    {id: 'Employee_Last_Name', label: 'Segundo Apellido'},
+]
+
 export default function Employee(){
 
     const classes = useStyle();
     const [records, setRecords] = useState(employeeServices.getAllEmployees())
 
     const {
-        TblContainer
-    }=useTable();
+        TblContainer/*,
+        TbleHead*/
+    }=useTable(records, headCells);
 
     return(
         <>
         <PageHeader 
             title ="Empleado nuevo"
-            subTitle = "Esta vista esta destinada para la administracion de los empleados"
+            subTitle = "Formulario para crear un Empleado Nuevo"
             icon = {<PeopleOutlineTwoToneIcon fontSize = "large" />}
         /> 
         <Paper className={classes.pageContent}>
             {<EmployeeForm />}
             <TblContainer>
+                {/*<TbleHead/>*/}
                 <TableBody>
                     {
                         records.map(item =>

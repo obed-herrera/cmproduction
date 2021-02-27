@@ -1,9 +1,18 @@
 import { LocalLaundryService } from "@material-ui/icons";
 
 const KEYS = {
-    employee: 'employee',
-    employeeID: 'ID_Employee'
+    loan: 'loan',
+    loanID: 'ID_Loan'
 }
+
+export const getClientCollection = () => ([
+    {id: '1', title: 'Juan Dominguez'},
+    {id: '2', title: 'Pedro Espinoza'},
+    {id: '3', title: 'Anielka Rojas'},
+    {id: '4', title: 'Debora Nicaragua'},
+    {id: '5', title: 'Jose Herrera'},
+    {id: '6', title: 'Kenia Aguirre'},
+]);
 
 export const getPersonCollection = () => ([
     {id: '1', title: 'Administrador'},
@@ -16,7 +25,7 @@ export const getEmployeeType = ()=>([
     {id: '3', title: 'Contador'},
 ])
 
-export function insertEmployee(data){
+export function insertLoan(data){
     let employee = getAllEmployees();
     data['id'] = generateEmployeeID()
     employee.push(data)

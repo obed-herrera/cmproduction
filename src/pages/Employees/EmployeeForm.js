@@ -117,7 +117,7 @@ export default function EmployeeForm(){
                     />
                     <TextField
                         variant = "standard"
-                        label = "Telefono"
+                        label = "Teléfono / Celular"
                         name = "Employee_Phone"
                         value = {values.Employee_Phone}
                         onChange = {handleInputChange}
@@ -157,7 +157,7 @@ export default function EmployeeForm(){
                 />
                 <Controls.DatePicker
                     name = "Employee_Creation_Date"
-                    label = "Fecha de Cracion"
+                    label = "Fecha de Creación"
                     value = {values.Employee_Creation_Date}
                     onChange = {handleInputChange}
                     error = {errors.Employee_Creation_Date}

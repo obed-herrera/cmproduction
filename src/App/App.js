@@ -8,6 +8,8 @@ import Home from '../pages/Home/Home';
 import Client from '../pages/Clients/Client';
 import Loan from '../pages/Loans/Loan';
 import Employee from "../pages/Employees/Employee";
+import Configuration from "../pages/Configuration/Configuration";
+import Login from "../pages/Login/Login";
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 
@@ -64,6 +66,8 @@ function App(){
           <Route path = '/client' component = {Client}/>
           <Route path = '/home' component = {Home}/>
           <Route path = '/loan' component = {Loan}/>
+          <Route path = '/configuration' component = {Configuration}/>
+          <Route path = '/login' component = {Login}/>
 
         </Switch>
       </Router>
