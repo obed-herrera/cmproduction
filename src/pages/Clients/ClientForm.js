@@ -171,7 +171,7 @@ export default function ClientForm(){
                         text = "Enviar"
                     />
                     <Controls.Button
-                        text = "Cancelar"
+                        text = "Resetear Formulario"
                         color = "default"
                         onClick = {resetForm}
                     />

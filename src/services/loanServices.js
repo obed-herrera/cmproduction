@@ -14,12 +14,11 @@ export const getClientCollection = () => ([
     {id: '6', title: 'Kenia Aguirre'},
 ]);
 export const getLoanTerms = () => ([
-    {id: '1', title: 'Juan Dominguez'},
-    {id: '2', title: 'Pedro Espinoza'},
-    {id: '3', title: 'Anielka Rojas'},
-    {id: '4', title: 'Debora Nicaragua'},
-    {id: '5', title: 'Jose Herrera'},
-    {id: '6', title: 'Kenia Aguirre'},
+    {id: '1', title: '2 Meses'},
+    {id: '2', title: '3 Meses'},
+    {id: '3', title: '4 Meses'},
+    {id: '4', title: '5 Meses'},
+    {id: '5', title: '6 Meses'},
 ]);
 
 export const getPersonCollection = () => ([

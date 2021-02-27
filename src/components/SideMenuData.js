@@ -7,6 +7,7 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import HomeWorkIcon from '@material-ui/icons/HomeWork';
 import SettingsIcon from '@material-ui/icons/Settings';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 
 export const SideMenuData = [
     {
@@ -36,7 +37,7 @@ export const SideMenuData = [
     {
         title: 'Reportes',
         path: '/Reports',
-        icon: <SupervisedUserCircleIcon />,
+        icon: <AssessmentIcon />,
         cName: 'nav-text'
     },
     {

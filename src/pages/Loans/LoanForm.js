@@ -144,7 +144,7 @@ export default function LoanForm(){
                         text = "Generar Préstamo"
                     />
                     <Controls.Button
-                        text = "Cancelar Préstamo"
+                        text = "Resetear Formulario"
                         color = "default"
                         onClick = {resetForm}
                     />

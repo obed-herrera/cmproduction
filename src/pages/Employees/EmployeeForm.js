@@ -108,7 +108,7 @@ export default function EmployeeForm(){
                 </Grid>
                 <Grid item xs ={4}>
                     <TextField
-                        variant = "standard"
+                        variant = "outlined"
                         label = "Correo"
                         name = "Employee_Email"
                         value = {values.Employee_Email}
@@ -116,19 +116,21 @@ export default function EmployeeForm(){
                         error = {errors.Employee_Email}
                     />
                     <TextField
-                        variant = "standard"
+                        variant = "outlined"
                         label = "Teléfono / Celular"
                         name = "Employee_Phone"
                         value = {values.Employee_Phone}
                         onChange = {handleInputChange}
                         error = {errors.Employee_Phone}
                     />
-                    <FormControl>
-                        <FormLabel>
-                            Dirección
-                            <TextareaAutosize rowsMin = {3}/>
-                        </FormLabel>
-                    </FormControl>
+                    <TextField
+                        variant = "outlined"
+                        label = "Dirección del Empleado"
+                        name = "Employee_Address"
+                        value = {values.Employee_Address}
+                        onChange = {handleInputChange}
+                        error = {errors.Employee_Address}
+                    />
                     <Controls.RadioGroup
                     name = "Employee_State"
                     label = "Estado"
@@ -169,7 +171,7 @@ export default function EmployeeForm(){
                         text = "Enviar"
                     />
                     <Controls.Button
-                        text = "Cancelar"
+                        text = "Resetear Formulario"
                         color = "default"
                         onClick = {resetForm}
                     />
