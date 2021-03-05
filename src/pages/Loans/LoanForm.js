@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, TextField,FormControl,FormLabel, Typography, TextareaAutosize} from '@material-ui/core';
+import { Grid, Typography} from '@material-ui/core';
 import {useForm, Form} from '../../components/useForm';
 import * as loanServices from '../../services/loanServices';
 
@@ -46,7 +46,7 @@ export default function LoanForm(){
         })
         
 
-        if(fieldValues == values)
+        if(fieldValues === values)
             return Object.values(temp).every(x => x === "")
     }
 

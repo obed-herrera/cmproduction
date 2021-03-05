@@ -1,7 +1,4 @@
 import React from 'react'
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';

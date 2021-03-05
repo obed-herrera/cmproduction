@@ -9,7 +9,7 @@ export default function useTable(records, headCells){
         </Table>
     )
 
-   /* const TbleHead = props => {
+    const TblHead = props => {
         return (<TableHead>
             <TableRow>
                 {
@@ -19,9 +19,10 @@ export default function useTable(records, headCells){
                 }
             </TableRow>
         </TableHead>)
-    }*/
+    }
 
     return{
-        TblContainer
+        TblContainer,
+        TblHead
     }
 }

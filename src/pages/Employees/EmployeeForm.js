@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, TextField,FormControl,FormLabel, Typography, TextareaAutosize} from '@material-ui/core';
 import {useForm, Form} from '../../components/useForm';
 import * as employeeServices from '../../services/employeeServices';
-
+import axios from 'axios';
 import Controls from "../../controls/Controls";
 
 const employeeState = [
@@ -26,6 +26,7 @@ const initialFValues ={
 }
 
 export default function EmployeeForm(){
+    
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -60,7 +61,7 @@ export default function EmployeeForm(){
         setErrors,
         handleInputChange,
         resetForm
-    }=useForm(initialFValues, true, validate);
+    } = useForm(initialFValues, true, validate);
 
     const handleSubmit = e =>{
         e.preventDefault()

@@ -1,4 +1,3 @@
-import { LocalLaundryService } from "@material-ui/icons";
 
 const KEYS = {
     employee: 'employee',

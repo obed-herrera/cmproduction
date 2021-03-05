@@ -30,7 +30,7 @@ export function useForm(initialFValues, validateOnChange=false, validate){
     }
 }
 
-const useStyle = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
     root:{
         '& .MuiFormControl-root':{
             width: '80%',
@@ -41,7 +41,7 @@ const useStyle = makeStyles(theme => ({
 
 export function Form(props){
 
-    const classes = useStyle();
+    const classes = useStyles();
     const {children, ...other} = props;
     
     return(

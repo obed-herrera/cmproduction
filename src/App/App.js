@@ -3,7 +3,6 @@ import "./App.css";
 import SideMenu from "../components/SideMenu";
 import {CssBaseline, makeStyles, ThemeProvider, createMuiTheme} from '@material-ui/core';
 import Header from "../components/Header";
-import PageHeader from "../components/PageHeader";
 import Home from '../pages/Home/Home';
 import Client from '../pages/Clients/Client';
 import Loan from '../pages/Loans/Loan';
@@ -60,7 +59,6 @@ function App(){
       
       <Router>
       <SideMenu />
-      <Header />
         <Switch>
           <Route path = '/employee' component = {Employee}/>
           <Route path = '/client' component = {Client}/>

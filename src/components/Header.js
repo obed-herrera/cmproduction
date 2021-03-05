@@ -1,6 +1,5 @@
 import React from 'react'
-import {AppBar, Text, Toolbar, makeStyles, Grid, IconButton, InputBase, Badge, Typography} from '@material-ui/core'
-import inputBase from '@material-ui/core';
+import {AppBar, Toolbar, makeStyles, Grid, IconButton, Typography} from '@material-ui/core'
 import Today from '@material-ui/icons/Today';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 //import makeStyles from '@material-ui/core/styles';

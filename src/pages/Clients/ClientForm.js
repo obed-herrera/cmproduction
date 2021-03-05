@@ -1,8 +1,8 @@
-import React from 'react'
-import { Grid, TextField,FormControl,FormLabel, Typography, TextareaAutosize} from '@material-ui/core';
+import React,{useEffect, useState}from 'react'
+import { Grid, TextField, Typography} from '@material-ui/core';
 import {useForm, Form} from '../../components/useForm';
 import * as clientServices from '../../services/clientServices';
-
+import axios from 'axios';
 import Controls from "../../controls/Controls";
 
 const clientState = [
@@ -26,6 +26,20 @@ const initialFValues ={
 }
 
 export default function ClientForm(){
+
+    const baseUrl = "http://localhost/crediapi/";
+    const [data, setData] = useState([]);
+
+    const peticionesGet = async()=>{
+        await axios.get(baseUrl)
+        .then(response=>{
+            console.log(response.data);
+        })
+    }
+
+    useEffect(()=>{
+        peticionesGet();
+    },[])
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -52,7 +66,7 @@ export default function ClientForm(){
         })
         
 
-        if(fieldValues == values)
+        if(fieldValues === values)
             return Object.values(temp).every(x => x === "")
     }
 
@@ -75,9 +89,6 @@ export default function ClientForm(){
 
     return(
         <Form onSubmit = {handleSubmit}>
-            <Typography>
-                    Ingrese los datos del cliente
-                </Typography>
             <Grid container>
                 <Grid item xs ={4}>
                     <Controls.Input 
@@ -166,15 +177,7 @@ export default function ClientForm(){
                 />   
 
                 <div>
-                    <Controls.Button
-                        type = "submit"
-                        text = "Enviar"
-                    />
-                    <Controls.Button
-                        text = "Resetear Formulario"
-                        color = "default"
-                        onClick = {resetForm}
-                    />
+    
                 </div>
                 </Grid>
             </Grid>
