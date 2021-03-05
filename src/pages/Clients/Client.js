@@ -27,7 +27,7 @@ const clientState = [
 
 const Client = (props) =>{
 
-    const baseUrl = "http://localhost/crediapi/";
+    const baseUrl = "http://localhost/crediapi/client.php";
     const [data, setData] = useState([]);
     const [modalInsertar, setModalInsertar] = useState(false);
     const [clienteSeleccionado, setClienteSeleccionado]=useState({
@@ -40,15 +40,23 @@ const Client = (props) =>{
         client_sys_code: '',
         client_home_address: '',
         client_business_address: '',
-        client_line: '',
-        client_state: ''
+        client_state: '',
+        client_line: ''
+        
     });
+
+    const handleChange=e=>{
+        const {name, value}=e.target;
+        setClienteSeleccionado((prevState)=>({
+          ...prevState,
+          [name]: value
+        }))
+        console.log(clienteSeleccionado);
+      }
 
     const abrirCerrarModalInsertar = () =>{
         setModalInsertar(!modalInsertar);
     }
-
-    const { buttonLabel, fullscreen } = props;
 
     const peticionesGet = async()=>{
         await axios.get(baseUrl)
@@ -59,11 +67,18 @@ const Client = (props) =>{
         })
     }
 
-    const peticionPost=async()=>{
+    const peticionesPost=async()=>{
         var f = new FormData();
-        f.append("Primer Nombre", clienteSeleccionado.client_first_name);
-        f.append("Segundo Nombre", clienteSeleccionado.client_second_name);
-        f.append("Primer Apellido", clienteSeleccionado.client_middle_name);
+        f.append("client_first_name", clienteSeleccionado.client_first_name);
+        f.append("client_second_name", clienteSeleccionado.client_second_name);
+        f.append("client_middle_name", clienteSeleccionado.client_middle_name);
+        f.append("client_last_name", clienteSeleccionado.client_last_name);
+        f.append("client_national_id", clienteSeleccionado.client_national_id);
+        f.append("client_sys_code", clienteSeleccionado.client_sys_code);
+        f.append("client_home_address", clienteSeleccionado.client_home_address);
+        f.append("client_business_address", clienteSeleccionado.client_business_address);
+        f.append("client_state", clienteSeleccionado.client_state);
+        f.append("client_line", clienteSeleccionado.client_line);
         f.append("METHOD", "POST");
         await axios.post(baseUrl, f)
         .then(response=>{
@@ -74,14 +89,7 @@ const Client = (props) =>{
         })
       }
 
-    const handleChange=e=>{
-        const {name, value}=e.target;
-        setClienteSeleccionado((prevState)=>({
-          ...prevState,
-          [name]: value
-        }))
-        console.log(clienteSeleccionado);
-      }
+    
 
     useEffect(()=>{
         peticionesGet();
@@ -148,47 +156,47 @@ const Client = (props) =>{
             <Grid item xs ={4}>
                 <label>Primer Nombre: </label>
                 <br />
-                <input type="text" className="form-control" name="nombre" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_first_name" onChange={handleChange}/>
                 <br />
                 <label>Segundo Nombre: </label>
                 <br />
-                <input type="text" className="form-control" name="lanzamiento" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_second_name" onChange={handleChange}/>
                 <br />
                 <label>Primer Apellido: </label>
                 <br />
-                <input type="text" className="form-control" name="desarrollador" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_middle_name" onChange={handleChange}/>
                 <br />
                 <label>Segundo Apellido: </label>
                 <br />
-                <input type="text" className="form-control" name="desarrollador" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_last_name" onChange={handleChange}/>
                 <br />
             </Grid>
             <Grid item xs ={4}>
                 <label>Cedula: </label>
                 <br />
-                <input type="text" className="form-control" name="nombre" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_national_id" onChange={handleChange}/>
                 <br />
                 <label>Codigo del Sistema: </label>
                 <br />
-                <input type="text" className="form-control" name="lanzamiento" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_sys_code" onChange={handleChange}/>
                 <br />
                 <label>Direccion de Casa: </label>
                 <br />
-                <input type="text" className="form-control" name="desarrollador" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_home_address" onChange={handleChange}/>
                 <br />
                 <label>Direccion del Negocio: </label>
                 <br />
-                <input type="text" className="form-control" name="desarrollador" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_business_address" onChange={handleChange}/>
                 <br />
             </Grid>
             <Grid item xs ={4}>
                 <label>Linea: </label>
                 <br />
-                <input type="text" className="form-control" name="nombre" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_line" onChange={handleChange}/>
                 <br />
                 <label>Estado del Cliente: </label>
                 <br />
-                <input type="text" className="form-control" name="lanzamiento" onChange={handleChange}/>
+                <input type="text" className="form-control" name="client_state" onChange={handleChange}/>
                 <br />
                     
             </Grid>
@@ -196,7 +204,7 @@ const Client = (props) =>{
         </div> 
       </ModalBody>
       <ModalFooter>
-            <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}
+            <button className="btn btn-primary" onClick={()=>peticionesPost()}>Insertar</button>{"   "}
             <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button>
       </ModalFooter>
     </Modal>
