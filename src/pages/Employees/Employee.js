@@ -2,23 +2,51 @@ import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
+import {Grid, TextField, makeStyles} from '@material-ui/core';
+import  MultipleSelect from "../../controls/MultipleSelect";
+import * as EmployeeServices from '../../services/employeeServices';
+import "./EmployeeStyles.css";
+import {useForm, Form} from '../../components/useForm';
+
+
+const useStyle = makeStyles(theme => ({
+    pageContent:{
+        margin: theme.spacing(5),
+        padding: theme.spacing(3)
+    }
+}))
+
+const EmployeeState = [
+    {id: 'activo', title: 'Activo'},
+    {id: 'inactivo', title: 'Inactivo'},
+]
 
 function Employee() {
-  const baseUrl="http://localhost/crediapi/employee.php";
+  const baseUrl="http://localhost/crediapi/Employee.php";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalEditar, setModalEditar]= useState(false);
   const [modalEliminar, setModalEliminar]= useState(false);
-  const [employeeSeleccionado, setemployeeSeleccionado]=useState({
+  const [employeeSeleccionado, setEmployeeSeleccionado]=useState({
     id_employee: '',
     employee_first_name: '',
     employee_second_name: '',
-    employee_middle_name: ''
+    employee_middle_name: '',
+    employee_last_name: '',
+    employee_email:'',
+    employee_phone:'',
+    employee_address:'',
+    employee_creation_date: new Date(),
+    employee_created_by: '',
+    employee_type: '',
+    employee_state: '',
+    employee_national_id: ''
   });
+
 
   const handleChange=e=>{
     const {name, value}=e.target;
-    setemployeeSeleccionado((prevState)=>({
+    setEmployeeSeleccionado((prevState)=>({
       ...prevState,
       [name]: value
     }))
@@ -51,6 +79,14 @@ function Employee() {
     f.append("employee_first_name", employeeSeleccionado.employee_first_name);
     f.append("employee_second_name", employeeSeleccionado.employee_second_name);
     f.append("employee_middle_name", employeeSeleccionado.employee_middle_name);
+    f.append("employee_last_name", employeeSeleccionado.employee_last_name);
+    f.append("employee_email", employeeSeleccionado.employee_email);
+    f.append("employee_phone", employeeSeleccionado.employee_phone);
+    f.append("employee_address", employeeSeleccionado.employee_address);
+    f.append("employee_created_by", employeeSeleccionado.employee_created_by);
+    f.append("employee_type", employeeSeleccionado.employee_type);
+    f.append("employee_state", employeeSeleccionado.employee_state);
+    f.append("employee_national_id", employeeSeleccionado.employee_national_id);
     f.append("METHOD", "POST");
     await axios.post(baseUrl, f)
     .then(response=>{
@@ -63,9 +99,9 @@ function Employee() {
 
   /*const peticionPut=async()=>{
     var f = new FormData();
-    f.append("nombre", employeeSeleccionado.nombre);
-    f.append("lanzamiento", employeeSeleccionado.lanzamiento);
-    f.append("desarrollador", employeeSeleccionado.desarrollador);
+    f.append("nombre", EmployeeSeleccionado.nombre);
+    f.append("lanzamiento", EmployeeSeleccionado.lanzamiento);
+    f.append("desarrollador", EmployeeSeleccionado.desarrollador);
     f.append("METHOD", "PUT");
     await axios.post(baseUrl, f, {params: {id: frameworkSeleccionado.id}})
     .then(response=>{
@@ -96,8 +132,8 @@ function Employee() {
     })
   }*/
 
-  const seleccionaremployee=(employee, caso)=>{
-    setemployeeSeleccionado(employee);
+  const seleccionarEmployee=(employee, caso)=>{
+    setEmployeeSeleccionado(employee);
 
     (caso==="Editar")?
     abrirCerrarModalEditar():
@@ -118,8 +154,11 @@ function Employee() {
         <tr>
           <th>ID</th>
           <th>Primer Nombre</th>
-          <th>Segundo Nombre</th>
           <th>Primer Apellido</th>
+          <th>Cedula del Empleado</th>
+          <th>Direccion de casa</th>
+          <th>Tipo de empleado</th>
+          <th>Fecha de creación</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -128,11 +167,14 @@ function Employee() {
           <tr key={index}>
             <td>{employee.id_employee}</td>
             <td>{employee.employee_first_name}</td>
-            <td>{employee.employee_second_name}</td>
             <td>{employee.employee_middle_name}</td>
+            <td>{employee.employee_national_id}</td>
+            <td>{employee.employee_address}</td>
+            <td>{employee.employee_type}</td>
+            <td>{employee.employee_creation_date}</td>
           <td>
-          <button className="btn btn-primary" onClick={()=>seleccionaremployee(employee, "Editar")}>Editar</button> {"  "}
-          <button className="btn btn-danger" onClick={()=>seleccionaremployee(employee, "Eliminar")}>Eliminar</button>
+          <button className="btn btn-primary" onClick={()=>seleccionarEmployee(Employee, "Editar")}>Editar</button> {"  "}
+          <button className="btn btn-danger" onClick={()=>seleccionarEmployee(Employee, "Eliminar")}>Eliminar</button>
           </td>
           </tr>
         ))}
@@ -143,23 +185,79 @@ function Employee() {
     </table>
 
 
-    <Modal isOpen={modalInsertar}>
-      <ModalHeader>Insertar Framework</ModalHeader>
+    <Modal isOpen={modalInsertar} contentClassName = "custom-modal-style">
+      <ModalHeader>Insertar Trabajador</ModalHeader>
       <ModalBody>
-        <div className="form-group">
-          <label>Nombre: </label>
-          <br />
-          <input type="text" className="form-control" name="employee_first_name" onChange={handleChange}/>
-          <br />
-          <label>Lanzamiento: </label>
-          <br />
-          <input type="text" className="form-control" name="employee_second_name" onChange={handleChange}/>
-          <br />
-          <label>Desarrollador: </label>
-          <br />
-          <input type="text" className="form-control" name="employee_middle_name" onChange={handleChange}/>
-          <br />
-        </div>
+            <Grid container spacing = {2} style = {{padding:20}}>
+                <Grid item xs ={4}>
+                    <div className = "form-group">
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_first_name" onChange = {handleChange}/>
+                            <span>Primer Nombre</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_second_name" onChange = {handleChange}/>
+                            <span>Segundo Nombre</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_middle_name" onChange = {handleChange}/>
+                            <span>Primer Apellido</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_last_name" onChange = {handleChange}/>
+                            <span>Segundo Apellido</span> 
+                        </label>
+                        <br/>
+                        {/*<input placeholder= " " type = "text" className = "form-control" name = "Employee_first_name" onChange = {handleChange}/>*/}
+                    </div>
+                </Grid>
+                <Grid item xs ={4}> 
+                    <div className = "form-group">
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_national_id" onChange = {handleChange}/>
+                            <span>Cedula del Trabajador</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_email" onChange = {handleChange}/>
+                            <span>Correo</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_address" onChange = {handleChange}/>
+                            <span>Direccion</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_created_by" onChange = {handleChange}/>
+                            <span>Trabajador creado por</span> 
+                        </label>
+                        <br/>
+                    </div>                                    
+                </Grid>
+                <Grid item xs = {4}>
+                  <div className = "form-group">
+                  <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "employee_phone" onChange = {handleChange}/>
+                      <span>Telefono </span> 
+                    </label>
+                    <br/>
+                    <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "employee_state" onChange = {handleChange}/>
+                      <span>Estado del Trabajador</span> 
+                    </label>
+                    <br/>
+                    <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "employee_type" onChange = {handleChange}/>
+                      <span>Tipo de Trabajador</span> 
+                    </label>
+                    <br/>
+                  </div>
+                </Grid>
+            </Grid>
       </ModalBody>
       <ModalFooter>
         <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}

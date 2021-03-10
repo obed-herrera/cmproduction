@@ -7,8 +7,9 @@ import  MultipleSelect from "../../controls/MultipleSelect";
 import * as clientServices from '../../services/clientServices';
 import "./ClientStyles.css";
 import {useForm, Form} from '../../components/useForm';
+import SideMenu from "../../components/SideMenu";
 
-
+<SideMenu/>
 const useStyle = makeStyles(theme => ({
     pageContent:{
         margin: theme.spacing(5),
@@ -43,9 +44,6 @@ function Client() {
     client_creation_date: new Date()
   });
 
-  const {
-      values
-  } = useForm(true);
 
   const handleChange=e=>{
     const {name, value}=e.target;
@@ -158,7 +156,7 @@ function Client() {
           <th>ID</th>
           <th>Primer Nombre</th>
           <th>Primer Apellido</th>
-          <th>Codigo del Cliente</th>
+          <th>Cedula del Cliente</th>
           <th>Direccion de casa</th>
           <th>Linea</th>
           <th>Fecha de creación</th>
@@ -171,7 +169,7 @@ function Client() {
             <td>{client.id_credi_client}</td>
             <td>{client.client_first_name}</td>
             <td>{client.client_middle_name}</td>
-            <td>{client.client_sys_code}</td>
+            <td>{client.client_national_id}</td>
             <td>{client.client_home_address}</td>
             <td>{client.client_line}</td>
             <td>{client.client_creation_date}</td>
@@ -242,6 +240,23 @@ function Client() {
                     </div>                                    
                 </Grid>
                 <Grid item xs = {4}>
+                  <div className = "form-group">
+                  <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "client_phone" onChange = {handleChange}/>
+                      <span>Telefono del Cliente</span> 
+                    </label>
+                    <br/>
+                    <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "client_state" onChange = {handleChange}/>
+                      <span>Estado del Cliente</span> 
+                    </label>
+                    <br/>
+                    <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "client_line" onChange = {handleChange}/>
+                      <span>Linea del Cliente</span> 
+                    </label>
+                    <br/>
+                  </div>
                 </Grid>
             </Grid>
       </ModalBody>
