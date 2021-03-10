@@ -9,7 +9,7 @@ import "./ClientStyles.css";
 import {useForm, Form} from '../../components/useForm';
 import SideMenu from "../../components/SideMenu";
 
-<SideMenu/>
+
 const useStyle = makeStyles(theme => ({
     pageContent:{
         margin: theme.spacing(5),
@@ -263,6 +263,85 @@ function Client() {
       <ModalFooter>
         <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button>
+      </ModalFooter>
+    </Modal>
+    <Modal isOpen={modalEditar} contentClassName = "custom-modal-style">
+      <ModalHeader>Insertar Cliente</ModalHeader>
+      <ModalBody>
+            <Grid container spacing = {2} style = {{padding:20}}>
+                <Grid item xs ={4}>
+                    <div className = "form-group">
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_first_name" onChange = {handleChange}/>
+                            <span>Primer Nombre</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_second_name" onChange = {handleChange}/>
+                            <span>Segundo Nombre</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_middle_name" onChange = {handleChange}/>
+                            <span>Primer Apellido</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_last_name" onChange = {handleChange}/>
+                            <span>Segundo Apellido</span> 
+                        </label>
+                        <br/>
+                        {/*<input placeholder= " " type = "text" className = "form-control" name = "client_first_name" onChange = {handleChange}/>*/}
+                    </div>
+                </Grid>
+                <Grid item xs ={4}> 
+                    <div className = "form-group">
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_national_id" onChange = {handleChange}/>
+                            <span>Cedula del Cliente</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_sys_code" onChange = {handleChange}/>
+                            <span>Codigo del Cliente</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_home_address" onChange = {handleChange}/>
+                            <span>Direccion de casa</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_business_address" onChange = {handleChange}/>
+                            <span>Direccion de negocio</span> 
+                        </label>
+                        <br/>
+                    </div>                                    
+                </Grid>
+                <Grid item xs = {4}>
+                  <div className = "form-group">
+                  <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "client_phone" onChange = {handleChange}/>
+                      <span>Telefono del Cliente</span> 
+                    </label>
+                    <br/>
+                    <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "client_state" onChange = {handleChange}/>
+                      <span>Estado del Cliente</span> 
+                    </label>
+                    <br/>
+                    <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "client_line" onChange = {handleChange}/>
+                      <span>Linea del Cliente</span> 
+                    </label>
+                    <br/>
+                  </div>
+                </Grid>
+            </Grid>
+      </ModalBody>
+      <ModalFooter>
+        <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}
+        <button className="btn btn-danger" onClick={()=>abrirCerrarModalEditar()}>Cancelar</button>
       </ModalFooter>
     </Modal>
 
