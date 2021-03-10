@@ -58,16 +58,19 @@ function App(){
       
       
       <Router>
-      <SideMenu />
+      
         <Switch>
+        <Route path = '/login' component = {Login}/>
+        <div>
+        <SideMenu/>
           <Route path = '/employee' component = {Employee}/>
           <Route path = '/client' component = {Client}/>
           <Route path = '/home' component = {Home}/>
           <Route path = '/loan' component = {Loan}/>
-          <Route path = '/configuration' component = {Configuration}/>
-          <Route path = '/login' component = {Login}/>
-
+          <Route path = '/configuration' component = {Configuration}/>   
+          </div> 
         </Switch>
+        
       </Router>
     <div className = {classes.appMain}>    
     </div>

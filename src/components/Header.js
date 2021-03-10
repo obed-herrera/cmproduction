@@ -24,11 +24,7 @@ export default function Header(){
                             CrediMarket
                         </Typography>
                     </Grid>
-                    <Grid item sm></Grid>
                     <Grid item>
-                    <IconButton>
-                        <Today />
-                    </IconButton>
                     <Link to = '/login'>
                         <IconButton >
                             <PowerSettingsNewIcon  />

@@ -78,9 +78,6 @@ const SideMenu = () => {
           </NavText>
           <NavPowerIcon>
           <Grid item>
-            <IconButton>
-              <Today />
-            </IconButton>
             <Link to = '/login'>
               <IconButton >
                 <PowerSettingsNewIcon  />
