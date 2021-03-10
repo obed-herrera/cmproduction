@@ -31,6 +31,9 @@ function Loan() {
   const [loanSeleccionado, setloanSeleccionado]=useState({
     id_credi_loan: '',
     loan_client: '',
+    loan_term:'',
+    loan_payment:'',
+    loan_mount:''
   });
 
 
@@ -134,6 +137,9 @@ function Loan() {
         <tr>
           <th>ID Prestamo</th>
           <th>Cliente</th>
+          <th>Plazo</th>
+          <th>Tipo de Pago</th>
+          <th>Monto</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -142,6 +148,9 @@ function Loan() {
           <tr key={index}>
             <td>{loan.id_credi_loan}</td>
             <td>{loan.loan_client}</td>
+            <td>{loan.loan_term}</td>
+            <td>{loan.loan_payment}</td>
+            <td>{loan.loan_mount}</td>
           <td>
           <button className="btn btn-primary" onClick={()=>seleccionarloan(loan, "Editar")}>Editar</button> {"  "}
           <button className="btn btn-danger" onClick={()=>seleccionarloan(loan, "Eliminar")}>Eliminar</button>
@@ -165,50 +174,33 @@ function Loan() {
                             <input placeholder= " " type = "text" className = "form-control" name = "loan_client" onChange = {handleChange}/>
                             <span>Cliente</span>
                         </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "loan_term" onChange = {handleChange}/>
+                            <span>Plazo</span>
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "loan_payment" onChange = {handleChange}/>
+                            <span>Tipo de Pago</span>
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "loan_mount" onChange = {handleChange}/>
+                            <span>Monto del Prestamo</span>
+                        </label>
+                        <br/>
                         {/*<input placeholder= " " type = "text" className = "form-control" name = "loan_first_name" onChange = {handleChange}/>*/}
                     </div>
                 </Grid>
                 <Grid item xs ={4}> 
                     <div className = "form-group">
-                        <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "loan_national_id" onChange = {handleChange}/>
-                            <span>Cedula del loane</span> 
-                        </label>
-                        <br/>
-                        <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "loan_sys_code" onChange = {handleChange}/>
-                            <span>Codigo del loane</span> 
-                        </label>
-                        <br/>
-                        <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "loan_home_address" onChange = {handleChange}/>
-                            <span>Direccion de casa</span> 
-                        </label>
-                        <br/>
-                        <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "loan_business_address" onChange = {handleChange}/>
-                            <span>Direccion de negocio</span> 
-                        </label>
-                        <br/>
+                        
                     </div>                                    
                 </Grid>
                 <Grid item xs = {4}>
                   <div className = "form-group">
-                  <label class = "pure-material-textfield-outlined">
-                      <input placeholder= " " type = "text" className = "form-control" name = "loan_phone" onChange = {handleChange}/>
-                      <span>Telefono del loane</span> 
-                    </label>
-                    <br/>
-                    <label class = "pure-material-textfield-outlined">
-                      <input placeholder= " " type = "text" className = "form-control" name = "loan_state" onChange = {handleChange}/>
-                      <span>Estado del loane</span> 
-                    </label>
-                    <br/>
-                    <label class = "pure-material-textfield-outlined">
-                      <input placeholder= " " type = "text" className = "form-control" name = "loan_line" onChange = {handleChange}/>
-                      <span>Linea del loane</span> 
-                    </label>
-                    <br/>
+                  
                   </div>
                 </Grid>
             </Grid>
