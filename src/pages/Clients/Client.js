@@ -98,20 +98,36 @@ function Client() {
     })
   }
 
-  /*const peticionPut=async()=>{
+  const peticionPut=async()=>{
     var f = new FormData();
-    f.append("nombre", clientSeleccionado.nombre);
-    f.append("lanzamiento", clientSeleccionado.lanzamiento);
-    f.append("desarrollador", clientSeleccionado.desarrollador);
+    f.append("client_first_name", clientSeleccionado.client_first_name);
+    f.append("client_second_name", clientSeleccionado.client_second_name);
+    f.append("client_middle_name", clientSeleccionado.client_middle_name);
+    f.append("client_last_name", clientSeleccionado.client_last_name);
+    f.append("client_national_id", clientSeleccionado.client_national_id);
+    f.append("client_sys_code", clientSeleccionado.client_sys_code);
+    f.append("client_home_address", clientSeleccionado.client_home_address);
+    f.append("client_business_address", clientSeleccionado.client_business_address);
+    f.append("client_state", clientSeleccionado.client_state);
+    f.append("client_line", clientSeleccionado.client_line);
+    f.append("client_phone", clientSeleccionado.client_phone);
     f.append("METHOD", "PUT");
-    await axios.post(baseUrl, f, {params: {id: frameworkSeleccionado.id}})
+    await axios.post(baseUrl, f, {params: {id: clientSeleccionado.id_credi_client}})
     .then(response=>{
       var dataNueva= data;
-      dataNueva.map(framework=>{
-        if(framework.id===frameworkSeleccionado.id){
-          framework.nombre=frameworkSeleccionado.nombre;
-          framework.lanzamiento=frameworkSeleccionado.lanzamiento;
-          framework.desarrollador=frameworkSeleccionado.desarrollador;
+      dataNueva && dataNueva.map(client=>{
+        if(client.id_credi_client===clientSeleccionado.id_credi_client){
+          client.client_first_name=clientSeleccionado.client_first_name;
+          client.client_second_name=clientSeleccionado.client_second_name;
+          client.client_middle_name=clientSeleccionado.client_middle_name;
+          client.client_last_name=clientSeleccionado.client_last_name;
+          client.client_national_id=clientSeleccionado.client_national_id;
+          client.client_sys_code=clientSeleccionado.client_sys_code;
+          client.client_home_address=clientSeleccionado.client_home_address;
+          client.client_business_address=clientSeleccionado.client_business_address;
+          client.client_state=clientSeleccionado.client_state;
+          client.client_line=clientSeleccionado.client_line;
+          client.client_phone=clientSeleccionado.client_phone;
         }
       });
       setData(dataNueva);
@@ -119,7 +135,7 @@ function Client() {
     }).catch(error=>{
       console.log(error);
     })
-  }*/
+  }
 
   /*const peticionDelete=async()=>{
     var f = new FormData();
@@ -272,7 +288,7 @@ function Client() {
                 <Grid item xs ={4}>
                     <div className = "form-group">
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "client_first_name" onChange = {handleChange}/>
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_first_name" onChange = {handleChange} value = {clientSeleccionado && clientSeleccionado.client_first_name}/>
                             <span>Primer Nombre</span> 
                         </label>
                         <br/>
@@ -340,7 +356,7 @@ function Client() {
             </Grid>
       </ModalBody>
       <ModalFooter>
-        <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}
+        <button className="btn btn-primary" onClick={()=>peticionPut()}>Insertar</button>{"   "}
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalEditar()}>Cancelar</button>
       </ModalFooter>
     </Modal>
