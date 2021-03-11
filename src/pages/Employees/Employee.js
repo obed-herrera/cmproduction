@@ -22,7 +22,7 @@ const EmployeeState = [
 ]
 
 function Employee() {
-  const baseUrl="http://localhost/crediapi/Employee.php";
+  const baseUrl="http://localhost/crediapi/employee.php";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalEditar, setModalEditar]= useState(false);
@@ -147,7 +147,7 @@ function Employee() {
   return (
     <div style={{textAlign: 'center'}}>
 <br />
-      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar</button>
+      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar Trabajador</button>
       <br /><br />
     <table className="table table-striped">
       <thead>

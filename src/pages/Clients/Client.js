@@ -164,7 +164,7 @@ function Client() {
   return (
     <div style={{textAlign: 'center'}}>
 <br />
-      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar</button>
+      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar Cliente</button>
       <br /><br />
     <table className="table table-striped">
       <thead>
@@ -356,7 +356,7 @@ function Client() {
             </Grid>
       </ModalBody>
       <ModalFooter>
-        <button className="btn btn-primary" onClick={()=>peticionPut()}>Insertar</button>{"   "}
+        <button className="btn btn-primary" onClick={()=>peticionPut()}>Editar</button>{"   "}
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalEditar()}>Cancelar</button>
       </ModalFooter>
     </Modal>
