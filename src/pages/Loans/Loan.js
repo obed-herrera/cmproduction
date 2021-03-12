@@ -130,7 +130,7 @@ function Loan() {
   return (
     <div style={{textAlign: 'center'}}>
 <br />
-      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar</button>
+      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Crear Nuevo Prestamo</button>
       <br /><br />
     <table className="table table-striped">
       <thead>
@@ -165,7 +165,7 @@ function Loan() {
 
 
     <Modal isOpen={modalInsertar} contentClassName = "custom-modal-style">
-      <ModalHeader>Insertar loane</ModalHeader>
+      <ModalHeader>Insertar Prestamo</ModalHeader>
       <ModalBody>
             <Grid container spacing = {2} style = {{padding:20}}>
                 <Grid item xs ={4}>
