@@ -10,6 +10,7 @@ import {useForm, Form} from '../../components/useForm';
 import SideMenu from "../../components/SideMenu";
 import { AirlineSeatIndividualSuite } from '@material-ui/icons';
 import AsyncSelect from 'react-select/async';
+import Controls from "../../controls/Controls";
 
 const useStyle = makeStyles(theme => ({
     pageContent:{
@@ -139,17 +140,17 @@ function Client() {
     })
   }
 
-  /*const peticionDelete=async()=>{
+  const peticionDelete=async()=>{
     var f = new FormData();
     f.append("METHOD", "DELETE");
-    await axios.post(baseUrl, f, {params: {id: frameworkSeleccionado.id}})
+    await axios.post(baseUrl, f, {params: {id_credi_client: clientSeleccionado.id_credi_client}})
     .then(response=>{
-      setData(data.filter(framework=>framework.id!==frameworkSeleccionado.id));
+      setData(data.filter(client=>client.id_credi_client!==clientSeleccionado.id_credi_client));
       abrirCerrarModalEliminar();
     }).catch(error=>{
       console.log(error);
     })
-  }*/
+  }
 
   const seleccionarClient=(client, caso)=>{
     setClientSeleccionado(client);
@@ -166,7 +167,13 @@ function Client() {
   return (
     <div style={{textAlign: 'center'}}>
 <br />
-      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar Cliente</button>
+      <Controls.Button
+                        /*type = "submit"*/
+                        text = "Insertar Cliente"
+                        color = "default"
+                        onClick = {()=>abrirCerrarModalInsertar()}
+                    />
+      {/*<button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar Cliente</button>*/}
       <br /><br />
     <table className="table table-striped">
       <thead>
@@ -192,8 +199,17 @@ function Client() {
             <td>{client.client_line}</td>
             <td>{client.client_creation_date}</td>
           <td>
-          <button className="btn btn-primary" onClick={()=>seleccionarClient(client, "Editar")}>Editar</button> {"  "}
-          <button className="btn btn-danger" onClick={()=>seleccionarClient(client, "Eliminar")}>Eliminar</button>
+          <Controls.Button
+                        type = "submit"
+                        text = "Editar"
+                        /*color = "default"*/
+                        onClick = {()=>seleccionarClient(client, "Editar")}
+                    /> {"  "}
+          <Controls.Button
+                        text = "Eliminar"
+                        color = "default"
+                        onClick = {()=>seleccionarClient(client, "Eliminar")}
+                    />
           </td>
           </tr>
         ))}
@@ -362,7 +378,22 @@ function Client() {
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalEditar()}>Cancelar</button>
       </ModalFooter>
     </Modal>
-
+    <Modal isOpen={modalEliminar}>
+        <ModalBody>
+        ¿Estás seguro que deseas eliminar el Cliente {clientSeleccionado && clientSeleccionado.client_middle_name}?
+        </ModalBody>
+        <ModalFooter>
+          <button className="btn btn-danger" onClick={()=>peticionDelete()}>
+            Sí
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={()=>abrirCerrarModalEliminar()}
+          >
+            No
+          </button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }
