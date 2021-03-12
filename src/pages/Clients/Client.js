@@ -1,14 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
-import {Grid, TextField, makeStyles} from '@material-ui/core';
+import {Grid, TextField, makeStyles, emphasize} from '@material-ui/core';
 import  MultipleSelect from "../../controls/MultipleSelect";
 import * as clientServices from '../../services/clientServices';
 import "./ClientStyles.css";
 import {useForm, Form} from '../../components/useForm';
 import SideMenu from "../../components/SideMenu";
-
+import { AirlineSeatIndividualSuite } from '@material-ui/icons';
+import AsyncSelect from 'react-select/async';
 
 const useStyle = makeStyles(theme => ({
     pageContent:{
@@ -23,6 +24,7 @@ const clientState = [
 ]
 
 function Client() {
+
   const baseUrl="http://localhost/crediapi/client.php";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
@@ -43,7 +45,6 @@ function Client() {
     client_phone: '',
     client_creation_date: new Date()
   });
-
 
   const handleChange=e=>{
     const {name, value}=e.target;
@@ -74,6 +75,7 @@ function Client() {
       console.log(error);
     })
   }
+
 
   const peticionPost=async()=>{
     var f = new FormData();
