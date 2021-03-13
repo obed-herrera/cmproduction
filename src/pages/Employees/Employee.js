@@ -7,6 +7,10 @@ import  MultipleSelect from "../../controls/MultipleSelect";
 import * as EmployeeServices from '../../services/employeeServices';
 import "./EmployeeStyles.css";
 import {useForm, Form} from '../../components/useForm';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 
 const useStyle = makeStyles(theme => ({
@@ -15,6 +19,16 @@ const useStyle = makeStyles(theme => ({
         padding: theme.spacing(3)
     }
 }))
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const EmployeeState = [
     {id: 'activo', title: 'Activo'},
@@ -41,6 +55,12 @@ function Employee() {
     employee_type: '',
     employee_state: '',
     employee_national_id: ''
+  });
+
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    employee_type: '',
+    employee_state: '',
   });
 
 
@@ -231,11 +251,23 @@ function Employee() {
                             <span>Direccion</span> 
                         </label>
                         <br/>
-                        <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "employee_created_by" onChange = {handleChange}/>
-                            <span>Trabajador creado por</span> 
-                        </label>
-                        <br/>
+                        <FormControl className={classes.formControl}>
+                        <NativeSelect
+                          className={classes.selectEmpty}
+                          value={state.employee_Created_by}
+                          name="employee_created_by"
+                          onChange={handleChange}
+                          inputProps={{ 'aria-label': 'employee_created_by' }}
+                        >
+                        <option value="" disabled>
+                          Trabajador creado por
+                        </option>
+                        <option value={'Raquel Narvaez'}>Raquel Narvaez</option>
+                        <option value={'Keyla Reyes'}>Magaly Medina</option>
+                        <option value={'Jennifer Emery'}>Magaly Medina</option>
+                      </NativeSelect>
+                      <FormHelperText>Trabajador creado por</FormHelperText>
+                    </FormControl>
                     </div>                                    
                 </Grid>
                 <Grid item xs = {4}>
@@ -245,15 +277,39 @@ function Employee() {
                       <span>Telefono </span> 
                     </label>
                     <br/>
-                    <label class = "pure-material-textfield-outlined">
-                      <input placeholder= " " type = "text" className = "form-control" name = "employee_state" onChange = {handleChange}/>
-                      <span>Estado del Trabajador</span> 
-                    </label>
-                    <br/>
-                    <label class = "pure-material-textfield-outlined">
-                      <input placeholder= " " type = "text" className = "form-control" name = "employee_type" onChange = {handleChange}/>
-                      <span>Tipo de Trabajador</span> 
-                    </label>
+                    <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.employee_State}
+                        name="employee_state"
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'employee_state' }}
+                      >
+                        <option value="" disabled>
+                          Estado del Trabajador
+                        </option>
+                        <option value={'Activo'}>Activo</option>
+                        <option value={'Inactivo'}>Inactivo</option>
+                      </NativeSelect>
+                      <FormHelperText>Estado del Trabajador</FormHelperText>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.employee_Type}
+                        name="employee_type"
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'employee_type' }}
+                      >
+                        <option value="" disabled>
+                          Tipo de Trabajador
+                        </option>
+                        <option value={'Administrador'}>Administrador</option>
+                        <option value={'Supervisor'}>Supervisor</option>
+                        <option value={'Cobrador'}>Cobrador</option>
+                      </NativeSelect>
+                      <FormHelperText>Tipo de Trabajador</FormHelperText>
+                    </FormControl>
                     <br/>
                   </div>
                 </Grid>
