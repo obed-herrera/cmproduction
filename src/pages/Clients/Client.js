@@ -11,13 +11,20 @@ import SideMenu from "../../components/SideMenu";
 import { AirlineSeatIndividualSuite } from '@material-ui/icons';
 import AsyncSelect from 'react-select/async';
 import Controls from "../../controls/Controls";
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
-const useStyle = makeStyles(theme => ({
-    pageContent:{
-        margin: theme.spacing(5),
-        padding: theme.spacing(3)
-    }
-}))
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const clientState = [
     {id: 'activo', title: 'Activo'},
@@ -45,6 +52,11 @@ function Client() {
     client_line: '',
     client_phone: '',
     client_creation_date: new Date()
+  });
+
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    client_line: '',
   });
 
   const handleChange=e=>{
@@ -285,11 +297,34 @@ function Client() {
                       <span>Estado del Cliente</span> 
                     </label>
                     <br/>
-                    <label class = "pure-material-textfield-outlined">
-                      <input placeholder= " " type = "text" className = "form-control" name = "client_line" onChange = {handleChange}/>
-                      <span>Linea del Cliente</span> 
-                    </label>
-                    <br/>
+                    <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.client_Line}
+                        name="client_line"
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'client_line' }}
+                      >
+                        <option value="" disabled>
+                          Linea del Cliente
+                        </option>
+                        <option value={'Montetabor'}>Montetabor</option>
+                        <option value={'Ticomo'}>Ticomo</option>
+                        <option value={'San Jose O.'}>San Jose O.</option>
+                        <option value={'Cuajachillo'}>Cuajachillo</option>
+                        <option value={'Ciudad Sandino'}>Ciudad Sandino</option>
+                        <option value={'Villa Reconciliacion'}>Villa Reconciliacion</option>
+                        <option value={'Bello Amanecer 1'}>Bello Amanecer 1</option>
+                        <option value={'Bello Amanecer 2'}>Bello Amanecer 2</option>
+                        <option value={'Bello Amanecer 3'}>Bello Amanecer 3</option>
+                        <option value={'Bello Amanecer 4'}>Bello Amanecer 4</option>
+                        <option value={'Giorgino Andrae'}>Giorgino Andrae</option>
+                        <option value={'Los Brasiles'}>Los Brasiles</option>
+                        <option value={'Bella Cruz'}>Bella Cruz</option>
+                        <option value={'Zona 3'}>Zona 3</option>
+                      </NativeSelect>
+                      <FormHelperText>Linea del Cliente</FormHelperText>
+                    </FormControl>
                   </div>
                 </Grid>
             </Grid>
@@ -364,6 +399,7 @@ function Client() {
                       <span>Estado del Cliente</span> 
                     </label>
                     <br/>
+                    
                     <label class = "pure-material-textfield-outlined">
                       <input placeholder= " " type = "text" className = "form-control" name = "client_line" onChange = {handleChange}/>
                       <span>Linea del Cliente</span> 
