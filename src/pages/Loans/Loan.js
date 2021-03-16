@@ -13,6 +13,10 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -66,6 +70,9 @@ function Loan() {
     client_creation_date: new Date()
   });
 
+  const [value, setValue] = React.useState('female');
+
+
   const classes = useStyles();
   const [state, setState] = React.useState({
     client_line: '',
@@ -82,6 +89,7 @@ function Loan() {
 
   const handleChange=e=>{
     const {name, value}=e.target;
+    setValue(e.target.value);
     setloanSeleccionado((prevState)=>({
       ...prevState,
       [name]: value
@@ -278,6 +286,7 @@ function Loan() {
                             <span>Monto del Prestamo</span>
                         </label>
                         <br/>
+                        
                         {/*<input placeholder= " " type = "text" className = "form-control" name = "loan_first_name" onChange = {handleChange}/>*/}
                     </div>
                 </Grid>
@@ -288,11 +297,19 @@ function Loan() {
                             <span>Interés %</span>
                         </label>
                         <br/>
+                        <FormControl component="fieldset">
+                          <FormLabel component="legend">Tipo de Moneda</FormLabel>
+                          <RadioGroup aria-label="money_type" name="money_type" value={value} onChange={handleChange}>
+                            <FormControlLabel value="money_type_dolar" control={<Radio />} label="Dolar" />
+                            <FormControlLabel value="money_type_cord" control={<Radio />} label="Cordobas" />
+                            <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" />
+                          </RadioGroup>
+                        </FormControl>
                     </div>                                    
                 </Grid>
                 <Grid item xs = {4}>
                   <div className = "form-group">
-                  
+                        
                   </div>
                 </Grid>
             </Grid>
