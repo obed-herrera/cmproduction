@@ -190,26 +190,24 @@ function Client() {
     <table className="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>Codigo del Cliente</th>
           <th>Primer Nombre</th>
           <th>Primer Apellido</th>
           <th>Cedula del Cliente</th>
           <th>Direccion de casa</th>
           <th>Linea</th>
-          <th>Fecha de creación</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         {data && data.map((client, index)=>(
           <tr key={index}>
-            <td>{client.id_credi_client}</td>
+            <td>{client.client_sys_code}</td>
             <td>{client.client_first_name}</td>
             <td>{client.client_middle_name}</td>
             <td>{client.client_national_id}</td>
             <td>{client.client_home_address}</td>
             <td>{client.client_line}</td>
-            <td>{client.client_creation_date}</td>
           <td>
           <Controls.Button
                         type = "submit"
