@@ -117,20 +117,36 @@ function Employee() {
     })
   }
 
-  /*const peticionPut=async()=>{
+  const peticionPut=async()=>{
     var f = new FormData();
-    f.append("nombre", EmployeeSeleccionado.nombre);
-    f.append("lanzamiento", EmployeeSeleccionado.lanzamiento);
-    f.append("desarrollador", EmployeeSeleccionado.desarrollador);
+    f.append("employee_first_name", employeeSeleccionado.employee_first_name);
+    f.append("employee_second_name", employeeSeleccionado.employee_second_name);
+    f.append("employee_middle_name", employeeSeleccionado.employee_middle_name);
+    f.append("employee_last_name", employeeSeleccionado.employee_last_name);
+    f.append("employee_email", employeeSeleccionado.employee_email);
+    f.append("employee_phone", employeeSeleccionado.employee_phone);
+    f.append("employee_address", employeeSeleccionado.employee_address);
+    f.append("employee_created_by", employeeSeleccionado.employee_created_by);
+    f.append("employee_type", employeeSeleccionado.employee_type);
+    f.append("employee_state", employeeSeleccionado.employee_state);
+    f.append("employee_national_id", employeeSeleccionado.employee_national_id);
     f.append("METHOD", "PUT");
-    await axios.post(baseUrl, f, {params: {id: frameworkSeleccionado.id}})
+    await axios.post(baseUrl, f, {params: {id_employee: employeeSeleccionado.id_employee}})
     .then(response=>{
       var dataNueva= data;
-      dataNueva.map(framework=>{
-        if(framework.id===frameworkSeleccionado.id){
-          framework.nombre=frameworkSeleccionado.nombre;
-          framework.lanzamiento=frameworkSeleccionado.lanzamiento;
-          framework.desarrollador=frameworkSeleccionado.desarrollador;
+      dataNueva.map(employee=>{
+        if(employee.id_employee===employeeSeleccionado.id_employee){
+          employee.employee_first_name=employeeSeleccionado.employee_first_name;
+          employee.employee_second_name=employeeSeleccionado.employee_second_name;
+          employee.employee_middle_name=employeeSeleccionado.employee_middle_name;
+          employee.employee_last_name=employeeSeleccionado.employee_last_name;
+          employee.employee_email=employeeSeleccionado.employee_email;
+          employee.employee_phone=employeeSeleccionado.employee_phone;
+          employee.employee_address=employeeSeleccionado.employee_address;
+          employee.employee_created_by=employeeSeleccionado.employee_created_by;
+          employee.employee_type=employeeSeleccionado.employee_type;
+          employee.employee_state=employeeSeleccionado.employee_state;
+          employee.employee_national_id=employeeSeleccionado.employee_national_id;
         }
       });
       setData(dataNueva);
@@ -138,19 +154,19 @@ function Employee() {
     }).catch(error=>{
       console.log(error);
     })
-  }*/
+  }
 
-  /*const peticionDelete=async()=>{
+  const peticionDelete=async()=>{
     var f = new FormData();
     f.append("METHOD", "DELETE");
-    await axios.post(baseUrl, f, {params: {id: frameworkSeleccionado.id}})
+    await axios.post(baseUrl, f, {params: {id_employee: employeeSeleccionado.id_employee}})
     .then(response=>{
-      setData(data.filter(framework=>framework.id!==frameworkSeleccionado.id));
+      setData(data.filter(employee=>employee.id_employee!==employeeSeleccionado.id_employee));
       abrirCerrarModalEliminar();
     }).catch(error=>{
       console.log(error);
     })
-  }*/
+  }
 
   const seleccionarEmployee=(employee, caso)=>{
     setEmployeeSeleccionado(employee);
@@ -191,8 +207,8 @@ function Employee() {
             <td>{employee.employee_type}</td>
             <td>{employee.employee_creation_date}</td>
           <td>
-          <button className="btn btn-primary" onClick={()=>seleccionarEmployee(Employee, "Editar")}>Editar</button> {"  "}
-          <button className="btn btn-danger" onClick={()=>seleccionarEmployee(Employee, "Eliminar")}>Eliminar</button>
+          <button className="btn btn-primary" onClick={()=>seleccionarEmployee(employee, "Editar")}>Editar</button> {"  "}
+          <button className="btn btn-danger" onClick={()=>seleccionarEmployee(employee, "Eliminar")}>Eliminar</button>
           </td>
           </tr>
         ))}
@@ -318,7 +334,137 @@ function Employee() {
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button>
       </ModalFooter>
     </Modal>
-
+    <Modal isOpen={modalEditar} contentClassName = "custom-modal-style">
+      <ModalHeader>Editar Trabajador</ModalHeader>
+      <ModalBody>
+            <Grid container spacing = {2} style = {{padding:20}}>
+                <Grid item xs ={4}>
+                    <div className = "form-group">
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_first_name" onChange = {handleChange}/>
+                            <span>Primer Nombre</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_second_name" onChange = {handleChange}/>
+                            <span>Segundo Nombre</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_middle_name" onChange = {handleChange}/>
+                            <span>Primer Apellido</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_last_name" onChange = {handleChange}/>
+                            <span>Segundo Apellido</span> 
+                        </label>
+                        <br/>
+                        {/*<input placeholder= " " type = "text" className = "form-control" name = "Employee_first_name" onChange = {handleChange}/>*/}
+                    </div>
+                </Grid>
+                <Grid item xs ={4}> 
+                    <div className = "form-group">
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_national_id" onChange = {handleChange}/>
+                            <span>Cedula del Trabajador</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_email" onChange = {handleChange}/>
+                            <span>Correo</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "employee_address" onChange = {handleChange}/>
+                            <span>Direccion</span> 
+                        </label>
+                        <br/>
+                        <FormControl className={classes.formControl}>
+                        <NativeSelect
+                          className={classes.selectEmpty}
+                          value={state.employee_Created_by}
+                          name="employee_created_by"
+                          onChange={handleChange}
+                          inputProps={{ 'aria-label': 'employee_created_by' }}
+                        >
+                        <option value="" disabled>
+                          Trabajador creado por
+                        </option>
+                        <option value={'Raquel Narvaez'}>Raquel Narvaez</option>
+                        <option value={'Keyla Reyes'}>Magaly Medina</option>
+                        <option value={'Jennifer Emery'}>Magaly Medina</option>
+                      </NativeSelect>
+                      <FormHelperText>Trabajador creado por</FormHelperText>
+                    </FormControl>
+                    </div>                                    
+                </Grid>
+                <Grid item xs = {4}>
+                  <div className = "form-group">
+                  <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "employee_phone" onChange = {handleChange}/>
+                      <span>Telefono </span> 
+                    </label>
+                    <br/>
+                    <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.employee_State}
+                        name="employee_state"
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'employee_state' }}
+                      >
+                        <option value="" disabled>
+                          Estado del Trabajador
+                        </option>
+                        <option value={'Activo'}>Activo</option>
+                        <option value={'Inactivo'}>Inactivo</option>
+                      </NativeSelect>
+                      <FormHelperText>Estado del Trabajador</FormHelperText>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.employee_Type}
+                        name="employee_type"
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'employee_type' }}
+                      >
+                        <option value="" disabled>
+                          Tipo de Trabajador
+                        </option>
+                        <option value={'Administrador'}>Administrador</option>
+                        <option value={'Supervisor'}>Supervisor</option>
+                        <option value={'Cobrador'}>Cobrador</option>
+                      </NativeSelect>
+                      <FormHelperText>Tipo de Trabajador</FormHelperText>
+                    </FormControl>
+                    <br/>
+                  </div>
+                </Grid>
+            </Grid>
+      </ModalBody>
+      <ModalFooter>
+        <button className="btn btn-primary" onClick={()=>peticionPut()}>Insertar</button>{"   "}
+        <button className="btn btn-danger" onClick={()=>abrirCerrarModalEditar()}>Cancelar</button>
+      </ModalFooter>
+    </Modal>
+    <Modal isOpen={modalEliminar}>
+        <ModalBody>
+        ¿Estás seguro que deseas eliminar al Trabajador {employeeSeleccionado && employeeSeleccionado.employee_middle_name}?
+        </ModalBody>
+        <ModalFooter>
+          <button className="btn btn-danger" onClick={()=>peticionDelete()}>
+            Sí
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={()=>abrirCerrarModalEliminar()}
+          >
+            No
+          </button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }
