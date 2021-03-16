@@ -54,7 +54,8 @@ function Employee() {
     employee_created_by: '',
     employee_type: '',
     employee_state: '',
-    employee_national_id: ''
+    employee_national_id: '',
+    employee_line: ''
   });
 
   const classes = useStyles();
@@ -107,6 +108,7 @@ function Employee() {
     f.append("employee_type", employeeSeleccionado.employee_type);
     f.append("employee_state", employeeSeleccionado.employee_state);
     f.append("employee_national_id", employeeSeleccionado.employee_national_id);
+    f.append("employee_line", employeeSeleccionado.employee_line);
     f.append("METHOD", "POST");
     await axios.post(baseUrl, f)
     .then(response=>{
@@ -130,6 +132,8 @@ function Employee() {
     f.append("employee_type", employeeSeleccionado.employee_type);
     f.append("employee_state", employeeSeleccionado.employee_state);
     f.append("employee_national_id", employeeSeleccionado.employee_national_id);
+    f.append("employee_line", employeeSeleccionado.employee_line);
+
     f.append("METHOD", "PUT");
     await axios.post(baseUrl, f, {params: {id_employee: employeeSeleccionado.id_employee}})
     .then(response=>{
@@ -193,7 +197,6 @@ function Employee() {
           <th>Cedula del Empleado</th>
           <th>Direccion de casa</th>
           <th>Tipo de empleado</th>
-          <th>Fecha de creación</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -205,7 +208,6 @@ function Employee() {
             <td>{employee.employee_national_id}</td>
             <td>{employee.employee_address}</td>
             <td>{employee.employee_type}</td>
-            <td>{employee.employee_creation_date}</td>
           <td>
           <button className="btn btn-primary" onClick={()=>seleccionarEmployee(employee, "Editar")}>Editar</button> {"  "}
           <button className="btn btn-danger" onClick={()=>seleccionarEmployee(employee, "Eliminar")}>Eliminar</button>
@@ -268,7 +270,7 @@ function Employee() {
                         <FormControl className={classes.formControl}>
                         <NativeSelect
                           className={classes.selectEmpty}
-                          value={state.employee_Created_by}
+                          value={state.employee_Created_By}
                           name="employee_created_by"
                           onChange={handleChange}
                           inputProps={{ 'aria-label': 'employee_created_by' }}
@@ -291,6 +293,38 @@ function Employee() {
                       <span>Telefono </span> 
                     </label>
                     <br/>
+                    <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.employee_Line}
+                        name="employee_line"
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'employee_line' }}
+                      >
+                        <option value="" disabled>
+                          Linea del Trabajador
+                        </option>
+                        <option value={'Mercado Huembes'}>Mercado Huembes</option>
+                        <option value={'Mercado Oriental'}>Mercado Oriental</option>
+                        <option value={'Montetabor'}>Montetabor</option>
+                        <option value={'Ticomo'}>Ticomo</option>
+                        <option value={'San Jose O.'}>San Jose O.</option>
+                        <option value={'Cuajachillo'}>Cuajachillo</option>
+                        <option value={'Ciudad Sandino'}>Ciudad Sandino</option>
+                        <option value={'Villa Reconciliacion'}>Villa Reconciliacion</option>
+                        <option value={'Bello Amanecer 1'}>Bello Amanecer 1</option>
+                        <option value={'Bello Amanecer 2'}>Bello Amanecer 2</option>
+                        <option value={'Bello Amanecer 3'}>Bello Amanecer 3</option>
+                        <option value={'Bello Amanecer 4'}>Bello Amanecer 4</option>
+                        <option value={'Giorgino Andrae'}>Giorgino Andrae</option>
+                        <option value={'Los Brasiles'}>Los Brasiles</option>
+                        <option value={'Bella Cruz'}>Bella Cruz</option>
+                        <option value={'Zona 3'}>Zona 3</option>
+                        <option value={'Pulperia'}>Pulperia</option>
+                        <option value={'Todas'}>Todas</option>
+                      </NativeSelect>
+                      <FormHelperText>Linea del Trabajador</FormHelperText>
+                    </FormControl>
                     <FormControl className={classes.formControl}>
                       <NativeSelect
                         className={classes.selectEmpty}
