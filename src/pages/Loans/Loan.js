@@ -404,6 +404,8 @@ function Loan() {
                         <option value="" disabled>
                           Linea del Cliente
                         </option>
+                        <option value={'Mercado Huembes'}>Mercado Huembes</option>
+                        <option value={'Mercado Oriental'}>Mercado Oriental</option>
                         <option value={'Montetabor'}>Montetabor</option>
                         <option value={'Ticomo'}>Ticomo</option>
                         <option value={'San Jose O.'}>San Jose O.</option>
@@ -418,6 +420,7 @@ function Loan() {
                         <option value={'Los Brasiles'}>Los Brasiles</option>
                         <option value={'Bella Cruz'}>Bella Cruz</option>
                         <option value={'Zona 3'}>Zona 3</option>
+                        <option value={'Pulperia'}>Pulperia</option>
                       </NativeSelect>
                       <FormHelperText>Linea del Cliente</FormHelperText>
                     </FormControl>
