@@ -8,24 +8,39 @@ import * as loanServices from '../../services/loanServices';
 import "./LoanStyles.css";
 import {useForm, Form} from '../../components/useForm';
 import SideMenu from "../../components/SideMenu";
+import Controls from "../../controls/Controls";
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 
-const useStyle = makeStyles(theme => ({
-    pageContent:{
-        margin: theme.spacing(5),
-        padding: theme.spacing(3)
-    }
-}))
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const loanState = [
     {id: 'activo', title: 'Activo'},
     {id: 'inactivo', title: 'Inactivo'},
 ]
 
+const clientState = [
+  {id: 'activo', title: 'Activo'},
+  {id: 'inactivo', title: 'Inactivo'},
+]
+
 function Loan() {
   const baseUrl="http://localhost/crediapi/Loan.php";
+  const baseUrl2="http://localhost/crediapi/client.php";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
+  const [modalInsertarNuevo, setModalInsertarNuevo]= useState(false);
   const [modalEditar, setModalEditar]= useState(false);
   const [modalEliminar, setModalEliminar]= useState(false);
   const [loanSeleccionado, setloanSeleccionado]=useState({
@@ -35,7 +50,35 @@ function Loan() {
     loan_payment:'',
     loan_mount:''
   });
+  const [clientSeleccionado, setClientSeleccionado]=useState({
+    id_credi_client: '',
+    client_first_name: '',
+    client_second_name: '',
+    client_middle_name: '',
+    client_last_name: '',
+    client_national_id: '',
+    client_sys_code: '',
+    client_home_address: '',
+    client_business_address: '',
+    client_state: '',
+    client_line: '',
+    client_phone: '',
+    client_creation_date: new Date()
+  });
 
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    client_line: '',
+  });
+
+  const handleChangeClient=e=>{
+    const {name, value}=e.target;
+    setClientSeleccionado((prevState)=>({
+      ...prevState,
+      [name]: value
+    }))
+    console.log(clientSeleccionado);
+  }
 
   const handleChange=e=>{
     const {name, value}=e.target;
@@ -48,6 +91,10 @@ function Loan() {
 
   const abrirCerrarModalInsertar=()=>{
     setModalInsertar(!modalInsertar);
+  }
+
+  const abrirCerrarModalInsertarNuevo=()=>{
+    setModalInsertarNuevo(!modalInsertarNuevo);
   }
 
   const abrirCerrarModalEditar=()=>{
@@ -67,6 +114,15 @@ function Loan() {
     })
   }
 
+  const peticionGetClient=async()=>{
+    await axios.get(baseUrl2)
+    .then(response=>{
+      setData(response.data);
+    }).catch(error=>{
+      console.log(error);
+    })
+  }
+
   const peticionPost=async()=>{
     var f = new FormData();
     f.append("loan_first_name", loanSeleccionado.loan_client);
@@ -75,6 +131,29 @@ function Loan() {
     .then(response=>{
       setData(data.concat(response.data));
       abrirCerrarModalInsertar();
+    }).catch(error=>{
+      console.log(error);
+    })
+  }
+
+  const peticionPostClient=async()=>{
+    var f = new FormData();
+    f.append("client_first_name", clientSeleccionado.client_first_name);
+    f.append("client_second_name", clientSeleccionado.client_second_name);
+    f.append("client_middle_name", clientSeleccionado.client_middle_name);
+    f.append("client_last_name", clientSeleccionado.client_last_name);
+    f.append("client_national_id", clientSeleccionado.client_national_id);
+    f.append("client_sys_code", clientSeleccionado.client_sys_code);
+    f.append("client_home_address", clientSeleccionado.client_home_address);
+    f.append("client_business_address", clientSeleccionado.client_business_address);
+    f.append("client_state", clientSeleccionado.client_state);
+    f.append("client_line", clientSeleccionado.client_line);
+    f.append("client_phone", clientSeleccionado.client_phone);
+    f.append("METHOD", "POST");
+    await axios.post(baseUrl2, f)
+    .then(response=>{
+      setData(data.concat(response.data));
+      abrirCerrarModalInsertarNuevo();
     }).catch(error=>{
       console.log(error);
     })
@@ -206,8 +285,122 @@ function Loan() {
             </Grid>
       </ModalBody>
       <ModalFooter>
+        <button className="btn btn-primary" onClick={()=>abrirCerrarModalInsertarNuevo()}>Crear Cliente</button>
         <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button>
+      </ModalFooter>
+    </Modal>
+    <Modal isOpen={modalInsertarNuevo} contentClassName = "custom-modal-style">
+      <ModalHeader>Insertar Cliente</ModalHeader>
+      <ModalBody>
+            <Grid container spacing = {2} style = {{padding:20}}>
+                <Grid item xs ={4}>
+                    <div className = "form-group">
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_first_name" onChange = {handleChangeClient}/>
+                            <span>Primer Nombre</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_second_name" onChange = {handleChangeClient}/>
+                            <span>Segundo Nombre</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_middle_name" onChange = {handleChangeClient}/>
+                            <span>Primer Apellido</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_last_name" onChange = {handleChangeClient}/>
+                            <span>Segundo Apellido</span> 
+                        </label>
+                        <br/>
+                        {/*<input placeholder= " " type = "text" className = "form-control" name = "client_first_name" onChange = {handleChange}/>*/}
+                    </div>
+                </Grid>
+                <Grid item xs ={4}> 
+                    <div className = "form-group">
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_national_id" onChange = {handleChangeClient}/>
+                            <span>Cedula del Cliente</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_sys_code" onChange = {handleChangeClient}/>
+                            <span>Codigo del Cliente</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_home_address" onChange = {handleChangeClient}/>
+                            <span>Direccion de casa</span> 
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_business_address" onChange = {handleChangeClient}/>
+                            <span>Direccion de negocio</span> 
+                        </label>
+                        <br/>
+                    </div>                                    
+                </Grid>
+                <Grid item xs = {4}>
+                  <div className = "form-group">
+                  <label class = "pure-material-textfield-outlined">
+                      <input placeholder= " " type = "text" className = "form-control" name = "client_phone" onChange = {handleChangeClient}/>
+                      <span>Telefono del Cliente</span> 
+                    </label>
+                    <br/>
+                    <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.client_state}
+                        name="client_state"
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'client_state' }}
+                      >
+                        <option value="" disabled>
+                          Estado del Cliente
+                        </option>
+                        <option value={'Activo'}>Activo</option>
+                        <option value={'Inactivo'}>Inactivo</option>
+                      </NativeSelect>
+                      <FormHelperText>Estado del Trabajador</FormHelperText>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.client_Line}
+                        name="client_line"
+                        onChange={handleChangeClient}
+                        inputProps={{ 'aria-label': 'client_line' }}
+                      >
+                        <option value="" disabled>
+                          Linea del Cliente
+                        </option>
+                        <option value={'Montetabor'}>Montetabor</option>
+                        <option value={'Ticomo'}>Ticomo</option>
+                        <option value={'San Jose O.'}>San Jose O.</option>
+                        <option value={'Cuajachillo'}>Cuajachillo</option>
+                        <option value={'Ciudad Sandino'}>Ciudad Sandino</option>
+                        <option value={'Villa Reconciliacion'}>Villa Reconciliacion</option>
+                        <option value={'Bello Amanecer 1'}>Bello Amanecer 1</option>
+                        <option value={'Bello Amanecer 2'}>Bello Amanecer 2</option>
+                        <option value={'Bello Amanecer 3'}>Bello Amanecer 3</option>
+                        <option value={'Bello Amanecer 4'}>Bello Amanecer 4</option>
+                        <option value={'Giorgino Andrae'}>Giorgino Andrae</option>
+                        <option value={'Los Brasiles'}>Los Brasiles</option>
+                        <option value={'Bella Cruz'}>Bella Cruz</option>
+                        <option value={'Zona 3'}>Zona 3</option>
+                      </NativeSelect>
+                      <FormHelperText>Linea del Cliente</FormHelperText>
+                    </FormControl>
+                  </div>
+                </Grid>
+            </Grid>
+      </ModalBody>
+      <ModalFooter>
+        <button className="btn btn-primary" onClick={()=>peticionPostClient()}>Insertar</button>{"   "}
+        <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertarNuevo()}>Cancelar</button>
       </ModalFooter>
     </Modal>
 
