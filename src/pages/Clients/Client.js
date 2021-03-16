@@ -292,11 +292,22 @@ function Client() {
                       <span>Telefono del Cliente</span> 
                     </label>
                     <br/>
-                    <label class = "pure-material-textfield-outlined">
-                      <input placeholder= " " type = "text" className = "form-control" name = "client_state" onChange = {handleChange}/>
-                      <span>Estado del Cliente</span> 
-                    </label>
-                    <br/>
+                    <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.client_state}
+                        name="client_state"
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'client_state' }}
+                      >
+                        <option value="" disabled>
+                          Estado del Cliente
+                        </option>
+                        <option value={'Activo'}>Activo</option>
+                        <option value={'Inactivo'}>Inactivo</option>
+                      </NativeSelect>
+                      <FormHelperText>Estado del Trabajador</FormHelperText>
+                    </FormControl>
                     <FormControl className={classes.formControl}>
                       <NativeSelect
                         className={classes.selectEmpty}
