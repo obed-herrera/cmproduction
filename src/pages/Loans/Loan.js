@@ -214,25 +214,34 @@ function Loan() {
     <table className="table table-striped">
       <thead>
         <tr>
-          <th>ID Prestamo</th>
           <th>Cliente</th>
           <th>Plazo</th>
           <th>Tipo de Pago</th>
           <th>Monto</th>
+          <th>Interes %</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         {data && data.map((loan, index)=>(
           <tr key={index}>
-            <td>{loan.id_credi_loan}</td>
             <td>{loan.loan_client}</td>
             <td>{loan.loan_term}</td>
             <td>{loan.loan_payment}</td>
             <td>{loan.loan_mount}</td>
+            <td>{loan.loan_interest}</td>
           <td>
-          <button className="btn btn-primary" onClick={()=>seleccionarloan(loan, "Editar")}>Editar</button> {"  "}
-          <button className="btn btn-danger" onClick={()=>seleccionarloan(loan, "Eliminar")}>Eliminar</button>
+          <Controls.Button
+                        type = "submit"
+                        text = "Editar"
+                        /*color = "default"*/
+                        onClick = {()=>seleccionarloan(loan, "Editar")}
+                    /> {"  "}
+          <Controls.Button
+                        text = "Eliminar"
+                        color = "default"
+                        onClick = {()=>seleccionarloan(loan, "Eliminar")}
+                    />
           </td>
           </tr>
         ))}
@@ -274,7 +283,11 @@ function Loan() {
                 </Grid>
                 <Grid item xs ={4}> 
                     <div className = "form-group">
-                        
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "loan_interest" onChange = {handleChange}/>
+                            <span>Interés %</span>
+                        </label>
+                        <br/>
                     </div>                                    
                 </Grid>
                 <Grid item xs = {4}>
@@ -285,9 +298,23 @@ function Loan() {
             </Grid>
       </ModalBody>
       <ModalFooter>
-        <button className="btn btn-primary" onClick={()=>abrirCerrarModalInsertarNuevo()}>Crear Cliente</button>
-        <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}
-        <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button>
+      <Controls.Button
+                        /*type = "submit"*/
+                        text = "Crear Cliente"
+                        color = "default"
+                        onClick = {()=>abrirCerrarModalInsertarNuevo()}
+                    />
+        <Controls.Button
+                        /*type = "submit"*/
+                        text = "Insertar"
+                        /*color = "default"*/
+                        onClick = {()=>peticionPost()}
+                    /> {"  "}
+          <Controls.Button
+                        text = "Cancelar"
+                        color = "secondary"
+                        onClick = {()=>abrirCerrarModalInsertar()}
+                    />
       </ModalFooter>
     </Modal>
     <Modal isOpen={modalInsertarNuevo} contentClassName = "custom-modal-style">
@@ -399,8 +426,17 @@ function Loan() {
             </Grid>
       </ModalBody>
       <ModalFooter>
-        <button className="btn btn-primary" onClick={()=>peticionPostClient()}>Insertar</button>{"   "}
-        <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertarNuevo()}>Cancelar</button>
+      <Controls.Button
+                        /*type = "submit"*/
+                        text = "Insertar"
+                        /*color = "default"*/
+                        onClick = {()=>peticionPostClient()}
+                    /> {"  "}
+          <Controls.Button
+                        text = "Cancelar"
+                        color = "secondary"
+                        onClick = {()=>abrirCerrarModalInsertarNuevo()}
+                    />
       </ModalFooter>
     </Modal>
 

@@ -172,7 +172,6 @@ function Employee() {
     <table className="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Primer Nombre</th>
           <th>Primer Apellido</th>
           <th>Cedula del Empleado</th>
@@ -185,7 +184,6 @@ function Employee() {
       <tbody>
         {data && data.map((employee, index)=>(
           <tr key={index}>
-            <td>{employee.id_employee}</td>
             <td>{employee.employee_first_name}</td>
             <td>{employee.employee_middle_name}</td>
             <td>{employee.employee_national_id}</td>
