@@ -5,6 +5,33 @@
    top: 50%; 
 }
 
+.ui.search .input {
+    width: 100%;
+  }
+  .ui.search .prompt {
+    border-radius: 0px;
+  }
+  .ui.input > input {
+    border: 1.5px solid rgba(34, 36, 38, 0.15);
+  }
+  
+  .item {
+    padding: 15px 0px !important;
+  }
+  
+  i.icon {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .right {
+    float: right !important;
+  }
+  .center-div {
+    text-align: center;
+  }
+
 .pure-material-textfield-outlined {
     --pure-material-safari-helper1: rgb(var(--pure-material-primary-rgb, 33, 150, 243));
     position: relative;

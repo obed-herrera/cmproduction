@@ -15,6 +15,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import MaterialTable from 'material-table';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -32,6 +33,7 @@ const clientState = [
 ]
 
 function Client() {
+
 
   const baseUrl="http://localhost/crediapi/client.php";
   const [data, setData]=useState([]);
@@ -53,6 +55,8 @@ function Client() {
     client_phone: '',
     client_creation_date: new Date()
   });
+
+  const [q, setQ] = useState("");
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -176,9 +180,10 @@ function Client() {
     peticionGet();
   },[])
 
+
   return (
     <div style={{textAlign: 'center'}}>
-<br />
+    <br />
       <Controls.Button
                         /*type = "submit"*/
                         text = "Insertar Cliente"
@@ -187,6 +192,8 @@ function Client() {
                     />
       {/*<button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar Cliente</button>*/}
       <br /><br />
+    <div>
+    </div>
     <table className="table table-striped">
       <thead>
         <tr>

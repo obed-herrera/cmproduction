@@ -220,9 +220,8 @@ function Loan() {
     peticionGet();
   },[])
 
-  state = {
-    busqueda: ''
-  }
+
+
 
   return (
     <div style={{textAlign: 'center'}}>
@@ -230,18 +229,7 @@ function Loan() {
       <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Crear Nuevo Prestamo</button>
       <br /><br />
     <table className="table table-striped">
-      <div className="barraBusqueda">
-        <input
-          type="text"
-          placeholder="Buscar"
-          className="busqueda"
-          value={this.state.busqueda}
-        />
-        <button type="button" className="btnBuscar">
-          {"  "}
-          <FontAwesomeIcon icon={faSearch}/>
-        </button>
-      </div>
+      
       <thead>
         <tr>
           <th>Cliente</th>
