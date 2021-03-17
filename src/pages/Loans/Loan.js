@@ -17,7 +17,14 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+const paginacionOpciones={
+  rowsPerPageText: 'Filas por Página',
+  rangeSeparatorText: 'de',
+  selectAlllRowsItem: true,
+  selectAllRowsItemText: 'Todos',
+}
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -39,6 +46,12 @@ const clientState = [
   {id: 'inactivo', title: 'Inactivo'},
 ]
 
+const onChangeTable=async e=>{
+  e.persist();
+  await this.setState({busqueda: e.target.value});
+  console.log(this.state.busqueda);
+}
+
 function Loan() {
   const baseUrl="http://localhost/crediapi/Loan.php";
   const baseUrl2="http://localhost/crediapi/client.php";
@@ -52,7 +65,9 @@ function Loan() {
     loan_client: '',
     loan_term:'',
     loan_payment:'',
-    loan_mount:''
+    loan_mount:'',
+    loan_interest:'',
+    loan_line:''
   });
   const [clientSeleccionado, setClientSeleccionado]=useState({
     id_credi_client: '',
@@ -115,15 +130,6 @@ function Loan() {
 
   const peticionGet=async()=>{
     await axios.get(baseUrl)
-    .then(response=>{
-      setData(response.data);
-    }).catch(error=>{
-      console.log(error);
-    })
-  }
-
-  const peticionGetClient=async()=>{
-    await axios.get(baseUrl2)
     .then(response=>{
       setData(response.data);
     }).catch(error=>{
@@ -214,12 +220,28 @@ function Loan() {
     peticionGet();
   },[])
 
+  state = {
+    busqueda: ''
+  }
+
   return (
     <div style={{textAlign: 'center'}}>
 <br />
       <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Crear Nuevo Prestamo</button>
       <br /><br />
     <table className="table table-striped">
+      <div className="barraBusqueda">
+        <input
+          type="text"
+          placeholder="Buscar"
+          className="busqueda"
+          value={this.state.busqueda}
+        />
+        <button type="button" className="btnBuscar">
+          {"  "}
+          <FontAwesomeIcon icon={faSearch}/>
+        </button>
+      </div>
       <thead>
         <tr>
           <th>Cliente</th>
@@ -227,6 +249,7 @@ function Loan() {
           <th>Tipo de Pago</th>
           <th>Monto</th>
           <th>Interes %</th>
+          <th>Linea del Prestamo</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -238,18 +261,14 @@ function Loan() {
             <td>{loan.loan_payment}</td>
             <td>{loan.loan_mount}</td>
             <td>{loan.loan_interest}</td>
+            <td>{loan.loan_line}</td>
           <td>
           <Controls.Button
                         type = "submit"
-                        text = "Editar"
+                        text = "Pagar"
                         /*color = "default"*/
                         onClick = {()=>seleccionarloan(loan, "Editar")}
                     /> {"  "}
-          <Controls.Button
-                        text = "Eliminar"
-                        color = "default"
-                        onClick = {()=>seleccionarloan(loan, "Eliminar")}
-                    />
           </td>
           </tr>
         ))}
@@ -309,7 +328,37 @@ function Loan() {
                 </Grid>
                 <Grid item xs = {4}>
                   <div className = "form-group">
-                        
+                  <FormControl className={classes.formControl}>
+                      <NativeSelect
+                        className={classes.selectEmpty}
+                        value={state.loan_Line}
+                        name="loan_line"
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'loan_line' }}
+                      >
+                        <option value="" disabled>
+                          Linea del Prestamo
+                        </option>
+                        <option value={'Mercado Huembes'}>Mercado Huembes</option>
+                        <option value={'Mercado Oriental'}>Mercado Oriental</option>
+                        <option value={'Montetabor'}>Montetabor</option>
+                        <option value={'Ticomo'}>Ticomo</option>
+                        <option value={'San Jose O.'}>San Jose O.</option>
+                        <option value={'Cuajachillo'}>Cuajachillo</option>
+                        <option value={'Ciudad Sandino'}>Ciudad Sandino</option>
+                        <option value={'Villa Reconciliacion'}>Villa Reconciliacion</option>
+                        <option value={'Bello Amanecer 1'}>Bello Amanecer 1</option>
+                        <option value={'Bello Amanecer 2'}>Bello Amanecer 2</option>
+                        <option value={'Bello Amanecer 3'}>Bello Amanecer 3</option>
+                        <option value={'Bello Amanecer 4'}>Bello Amanecer 4</option>
+                        <option value={'Giorgino Andrae'}>Giorgino Andrae</option>
+                        <option value={'Los Brasiles'}>Los Brasiles</option>
+                        <option value={'Bella Cruz'}>Bella Cruz</option>
+                        <option value={'Zona 3'}>Zona 3</option>
+                        <option value={'Pulperia'}>Pulperia</option>
+                      </NativeSelect>
+                      <FormHelperText>Linea del Prestamo</FormHelperText>
+                    </FormControl>
                   </div>
                 </Grid>
             </Grid>
