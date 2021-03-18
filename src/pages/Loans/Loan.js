@@ -65,6 +65,7 @@ function Loan() {
     loan_client: '',
     loan_term:'',
     loan_payment:'',
+    money_type: '',
     loan_mount:'',
     loan_interest:'',
     loan_line:''
