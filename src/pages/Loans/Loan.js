@@ -53,7 +53,7 @@ const onChangeTable=async e=>{
 }
 
 function Loan() {
-  const baseUrl="http://localhost/crediapi/Loan.php";
+  const baseUrl="http://localhost/crediapi/loan.php";
   const baseUrl2="http://localhost/crediapi/client.php";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
@@ -62,8 +62,8 @@ function Loan() {
   const [modalEliminar, setModalEliminar]= useState(false);
   const [loanSeleccionado, setloanSeleccionado]=useState({
     id_credi_loan: '',
-    loan_client: '',
-    loan_term:'',
+    client_name: '',
+    loan_term: '',
     loan_payment:'',
     money_type: '',
     loan_mount:'',
@@ -140,7 +140,13 @@ function Loan() {
 
   const peticionPost=async()=>{
     var f = new FormData();
-    f.append("loan_first_name", loanSeleccionado.loan_client);
+    f.append("client_name", loanSeleccionado.client_name);
+    f.append("loan_term", loanSeleccionado.loan_term);
+    f.append("loan_payment", loanSeleccionado.loan_payment);
+    f.append("money_type", loanSeleccionado.loan_type);
+    f.append("loan_mount", loanSeleccionado.loan_mount);
+    f.append("loan_interest", loanSeleccionado.loan_interest);
+    f.append("loan_line", loanSeleccionado.loan_line);
     f.append("METHOD", "POST");
     await axios.post(baseUrl, f)
     .then(response=>{
@@ -209,8 +215,8 @@ function Loan() {
     })
   }*/
 
-  const seleccionarloan=(loan, caso)=>{
-    setloanSeleccionado(loan);
+  const seleccionarloan=(credi_loan, caso)=>{
+    setloanSeleccionado(credi_loan);
 
     (caso==="Editar")?
     abrirCerrarModalEditar():
@@ -244,21 +250,21 @@ function Loan() {
         </tr>
       </thead>
       <tbody>
-        {data && data.map((loan, index)=>(
+        {data && data.map((credi_loan, index)=>(
           <tr key={index}>
-            <td>{loan.loan_client}</td>
-            <td>{loan.loan_term}</td>
-            <td>{loan.loan_payment}</td>
-            <td>{loan.money_type}</td>
-            <td>{loan.loan_mount}</td>
-            <td>{loan.loan_interest}</td>
-            <td>{loan.loan_line}</td>
+            <td>{credi_loan.client_name}</td>
+            <td>{credi_loan.loan_term}</td>
+            <td>{credi_loan.loan_payment}</td>
+            <td>{credi_loan.money_type}</td>
+            <td>{credi_loan.loan_mount}</td>
+            <td>{credi_loan.loan_interest}</td>
+            <td>{credi_loan.loan_line}</td>
           <td>
           <Controls.Button
                         type = "submit"
                         text = "Pagar"
                         /*color = "default"*/
-                        onClick = {()=>seleccionarloan(loan, "Editar")}
+                        onClick = {()=>seleccionarloan(credi_loan, "Editar")}
                     /> {"  "}
           </td>
           </tr>
@@ -277,7 +283,7 @@ function Loan() {
                 <Grid item xs ={4}>
                     <div className = "form-group">
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "loan_client" onChange = {handleChange}/>
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_name" onChange = {handleChange}/>
                             <span>Cliente</span>
                         </label>
                         <br/>
@@ -288,7 +294,7 @@ function Loan() {
                               value={state.loan_Term}
                               name="loan_term"
                               onChange={handleChange}
-                              inputProps={{ 'aria-label': 'loan_Term' }}
+                              inputProps={{ 'aria-label': 'loan_term' }}
                             >
                               <option value="" disabled>
                                 Plazo del Prestamo
@@ -330,34 +336,41 @@ function Loan() {
                             <FormHelperText>Forma de Pago</FormHelperText>
                           </FormControl>
                         </div>
-                        <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "loan_mount" onChange = {handleChange}/>
-                            <span>Monto del Prestamo</span>
-                        </label>
-                        <br/>
-                        
                         {/*<input placeholder= " " type = "text" className = "form-control" name = "loan_first_name" onChange = {handleChange}/>*/}
                     </div>
                 </Grid>
                 <Grid item xs ={4}> 
                     <div className = "form-group">
                         <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "loan_mount" onChange = {handleChange}/>
+                            <span>Monto del Prestamo</span>
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
                             <input placeholder= " " type = "text" className = "form-control" name = "loan_interest" onChange = {handleChange}/>
                             <span>Interés %</span>
                         </label>
                         <br/>
-                        <FormControl component="fieldset">
-                          <FormLabel component="legend">Tipo de Moneda</FormLabel>
-                          <RadioGroup aria-label="money_type" name="money_type" value={value} onChange={handleChange}>
-                            <FormControlLabel value="Dolar" control={<Radio />} label="Dolar" />
-                            <FormControlLabel value="Cordoba" control={<Radio />} label="Cordobas" />
-                            <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" />
-                          </RadioGroup>
-                        </FormControl>
                     </div>                                    
                 </Grid>
                 <Grid item xs = {4}>
                   <div className = "form-group">
+                        <FormControl className={classes.formControl}>
+                            <NativeSelect
+                              className={classes.selectEmpty}
+                              value={state.money_Type}
+                              name="money_type"
+                              onChange={handleChange}
+                              inputProps={{ 'aria-label': 'money_type' }}
+                            >
+                              <option value="" disabled>
+                                Tipo de Moneda
+                              </option>
+                              <option value={'Dolar'}>Dólar</option>
+                              <option value={'Cordoba'}>Córdoba</option>
+                            </NativeSelect>
+                            <FormHelperText>Tipo de Moneda</FormHelperText>
+                          </FormControl>
                   <FormControl className={classes.formControl}>
                       <NativeSelect
                         className={classes.selectEmpty}
