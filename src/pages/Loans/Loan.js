@@ -235,6 +235,7 @@ function Loan() {
           <th>Cliente</th>
           <th>Plazo</th>
           <th>Tipo de Pago</th>
+          <th>Tipo de Moneda</th>
           <th>Monto</th>
           <th>Interes %</th>
           <th>Linea del Prestamo</th>
@@ -247,6 +248,7 @@ function Loan() {
             <td>{loan.loan_client}</td>
             <td>{loan.loan_term}</td>
             <td>{loan.loan_payment}</td>
+            <td>{loan.money_type}</td>
             <td>{loan.loan_mount}</td>
             <td>{loan.loan_interest}</td>
             <td>{loan.loan_line}</td>
@@ -267,7 +269,7 @@ function Loan() {
     </table>
 
 
-    <Modal isOpen={modalInsertar} contentClassName = "custom-modal-style">
+    <Modal isOpen={modalInsertar} contentClassName = "custom-modal-style-loan">
       <ModalHeader>Insertar Prestamo</ModalHeader>
       <ModalBody>
             <Grid container spacing = {2} style = {{padding:20}}>
@@ -278,16 +280,55 @@ function Loan() {
                             <span>Cliente</span>
                         </label>
                         <br/>
-                        <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "loan_term" onChange = {handleChange}/>
-                            <span>Plazo</span>
-                        </label>
-                        <br/>
-                        <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "loan_payment" onChange = {handleChange}/>
-                            <span>Tipo de Pago</span>
-                        </label>
-                        <br/>
+                        <div className = "form-group">
+                        <FormControl className={classes.formControl}>
+                            <NativeSelect
+                              className={classes.selectEmpty}
+                              value={state.loan_Term}
+                              name="loan_term"
+                              onChange={handleChange}
+                              inputProps={{ 'aria-label': 'loan_Term' }}
+                            >
+                              <option value="" disabled>
+                                Plazo del Prestamo
+                              </option>
+                              <option value={'30'}>1 Mes</option>
+                              <option value={'60'}>2 Meses</option>
+                              <option value={'90'}>3 Meses</option>
+                              <option value={'120'}>4 Meses</option>
+                              <option value={'150'}>5 Meses</option>
+                              <option value={'180'}>6 Meses</option>
+                              <option value={'210'}>7 Meses</option>
+                              <option value={'240'}>8 Meses</option>
+                              <option value={'270'}>9 Meses</option>
+                              <option value={'300'}>10 Meses</option>
+                              <option value={'330'}>11 Meses</option>
+                              <option value={'360'}>12 Meses</option>
+                            </NativeSelect>
+                            <FormHelperText>Plazo del Prestamo</FormHelperText>
+                          </FormControl>
+                        </div>
+                        <div className = "form-group">
+                        <FormControl className={classes.formControl}>
+                            <NativeSelect
+                              className={classes.selectEmpty}
+                              value={state.loan_Payment}
+                              name="loan_payment"
+                              onChange={handleChange}
+                              inputProps={{ 'aria-label': 'loan_payment' }}
+                            >
+                              <option value="" disabled>
+                                Forma de pago
+                              </option>
+                              <option value={'1'}>Diario</option>
+                              <option value={'1.5'}>Dia de por medio</option>
+                              <option value={'7'}>Semanal</option>
+                              <option value={'15'}>Quincenal</option>
+                              <option value={'30'}>Mensual</option>
+                            </NativeSelect>
+                            <FormHelperText>Forma de Pago</FormHelperText>
+                          </FormControl>
+                        </div>
                         <label class = "pure-material-textfield-outlined">
                             <input placeholder= " " type = "text" className = "form-control" name = "loan_mount" onChange = {handleChange}/>
                             <span>Monto del Prestamo</span>
@@ -307,8 +348,8 @@ function Loan() {
                         <FormControl component="fieldset">
                           <FormLabel component="legend">Tipo de Moneda</FormLabel>
                           <RadioGroup aria-label="money_type" name="money_type" value={value} onChange={handleChange}>
-                            <FormControlLabel value="money_type_dolar" control={<Radio />} label="Dolar" />
-                            <FormControlLabel value="money_type_cord" control={<Radio />} label="Cordobas" />
+                            <FormControlLabel value="Dolar" control={<Radio />} label="Dolar" />
+                            <FormControlLabel value="Cordoba" control={<Radio />} label="Cordobas" />
                             <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" />
                           </RadioGroup>
                         </FormControl>
@@ -371,7 +412,7 @@ function Loan() {
                     />
       </ModalFooter>
     </Modal>
-    <Modal isOpen={modalInsertarNuevo} contentClassName = "custom-modal-style">
+    <Modal isOpen={modalInsertarNuevo} contentClassName = "custom-modal-style-client">
       <ModalHeader>Insertar Cliente</ModalHeader>
       <ModalBody>
             <Grid container spacing = {2} style = {{padding:20}}>
