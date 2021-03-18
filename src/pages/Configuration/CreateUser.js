@@ -204,7 +204,7 @@ function CreateUser() {
                         </label>
                         <br/>
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "password" onChange = {handleChange}/>
+                            <input placeholder= " " type = "password" className = "form-control" name = "password" onChange = {handleChange}/>
                             <span>Constraseña</span> 
                         </label>
                         <br/>
