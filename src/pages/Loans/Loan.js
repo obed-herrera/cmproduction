@@ -143,7 +143,7 @@ function Loan() {
     f.append("client_name", loanSeleccionado.client_name);
     f.append("loan_term", loanSeleccionado.loan_term);
     f.append("loan_payment", loanSeleccionado.loan_payment);
-    f.append("money_type", loanSeleccionado.loan_type);
+    f.append("money_type", loanSeleccionado.money_type);
     f.append("loan_mount", loanSeleccionado.loan_mount);
     f.append("loan_interest", loanSeleccionado.loan_interest);
     f.append("loan_line", loanSeleccionado.loan_line);
@@ -355,7 +355,8 @@ function Loan() {
                 </Grid>
                 <Grid item xs = {4}>
                   <div className = "form-group">
-                        <FormControl className={classes.formControl}>
+                    <div>
+                    <FormControl className={classes.formControl}>
                             <NativeSelect
                               className={classes.selectEmpty}
                               value={state.money_Type}
@@ -371,6 +372,7 @@ function Loan() {
                             </NativeSelect>
                             <FormHelperText>Tipo de Moneda</FormHelperText>
                           </FormControl>
+                    </div>      
                   <FormControl className={classes.formControl}>
                       <NativeSelect
                         className={classes.selectEmpty}
