@@ -193,6 +193,7 @@ function Client() {
       {/*<button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar Cliente</button>*/}
       <br /><br />
     <div>
+    <input class="form-control"  value="btn-search" onChange={(text) => this.filter(text)}/>
     </div>
     <table className="table table-striped">
       <thead>
