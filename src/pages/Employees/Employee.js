@@ -221,7 +221,7 @@ function Employee() {
     </table>
 
 
-    <Modal isOpen={modalInsertar} contentClassName = "custom-modal-style">
+    <Modal isOpen={modalInsertar} contentClassName = "custom-modal-style-employee">
       <ModalHeader>Insertar Trabajador</ModalHeader>
       <ModalBody>
             <Grid container spacing = {2} style = {{padding:20}}>
@@ -368,7 +368,7 @@ function Employee() {
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button>
       </ModalFooter>
     </Modal>
-    <Modal isOpen={modalEditar} contentClassName = "custom-modal-style">
+    <Modal isOpen={modalEditar} contentClassName = "custom-modal-style-employee">
       <ModalHeader>Editar Trabajador</ModalHeader>
       <ModalBody>
             <Grid container spacing = {2} style = {{padding:20}}>
