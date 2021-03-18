@@ -204,7 +204,7 @@ function CreateUser() {
                         </label>
                         <br/>
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "password" className = "form-control" name = "password" onChange = {handleChange}/>
+                            <input placeholder= " " type = "password" className = "form-control" name = "credi_password" onChange = {handleChange}/>
                             <span>Constraseña</span> 
                         </label>
                         <br/>
@@ -223,6 +223,22 @@ function CreateUser() {
                                 <option value={'Super Administrador'}>Super Administrador</option>
                             </NativeSelect>
                       <FormHelperText>Linea del Cliente</FormHelperText>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                            <NativeSelect
+                                className={classes.selectEmpty}
+                                value={state.user_State}
+                                name="user_state"
+                                onChange={handleChange}
+                                inputProps={{ 'aria-label': 'user_state' }}
+                            >
+                                <option value="" disabled>
+                                Estado del Usuario
+                                </option>
+                                <option value={'Activo'}>Activo</option>
+                                <option value={'Inactivo'}>Inactivo</option>
+                            </NativeSelect>
+                      <FormHelperText>Estado del Usuario</FormHelperText>
                     </FormControl>
                     </div>
                 </Grid>
