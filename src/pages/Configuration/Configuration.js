@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Grid from '@material-ui/core/Grid';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Loan(){
+export default function Configuration(){
     const classes = useStyles();
     return(
         <>
@@ -26,14 +27,18 @@ export default function Loan(){
         <div>
             <Grid container justify = "center">
                 <Grid item xs = {2}>
-                    <Button
-                        variant = "container"
-                        color = "secondary"
-                        className = {classes.button}
-                        startIcon = {<GroupAddIcon/>}
-                    >
-                    Crear Usuario 
-                    </Button>
+                    <Grid item>
+                        <Link to = '/createuser'>
+                        <Button
+                            variant = "container"
+                            color = "secondary"
+                            className = {classes.button}
+                            startIcon = {<GroupAddIcon/>}
+                        >
+                        Administrar Usuarios 
+                        </Button>
+                        </Link>
+                    </Grid>
                     <Button
                         variant = "container"
                         color = "default"
