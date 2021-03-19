@@ -244,17 +244,17 @@ function Loan() {
     })
   }*/
 
-  /*const peticionDelete=async()=>{
+  const peticionDelete=async()=>{
     var f = new FormData();
     f.append("METHOD", "DELETE");
-    await axios.post(baseUrl, f, {params: {id: frameworkSeleccionado.id}})
+    await axios.post(baseUrl, f, {params: {id_credi_loan: loanSeleccionado.id_credi_loan}})
     .then(response=>{
-      setData(data.filter(framework=>framework.id!==frameworkSeleccionado.id));
+      setData(data.filter(loan=>loan.id_credi_loan!==loanSeleccionado.id_credi_loan));
       abrirCerrarModalEliminar();
     }).catch(error=>{
       console.log(error);
     })
-  }*/
+  }
 
   const seleccionarloan=(credi_loan, caso)=>{
     setloanSeleccionado(credi_loan);
@@ -304,6 +304,11 @@ function Loan() {
                         /*color = "default"*/
                         onClick = {()=>seleccionarloan(credi_loan, "Editar")}
                     /> {"  "}
+                    <Controls.Button
+                        text = "Eliminar"
+                        color = "default"
+                        onClick = {()=>seleccionarloan(credi_loan, "Eliminar")}
+                    />
           </td>
           </tr>
         ))}
@@ -338,8 +343,8 @@ function Loan() {
                                 Cliente
                               </option>
                               {client.map((value)=>(
-                                <option value = {value.client_first_name} key = {value.id_credi_client}>
-                                  {value.client_first_name}
+                                <option value = {value.client_name} key = {value.id_credi_client}>
+                                  {value.client_first_name}{' '}{value.client_middle_name}
                                 </option>
                               ))}
                               
@@ -628,7 +633,22 @@ function Loan() {
                     />
       </ModalFooter>
     </Modal>
-
+    <Modal isOpen={modalEliminar}>
+        <ModalBody>
+        ¿Estás seguro que deseas eliminar el Prestamo {loanSeleccionado && loanSeleccionado.client_name}?
+        </ModalBody>
+        <ModalFooter>
+          <button className="btn btn-danger" onClick={()=>peticionDelete()}>
+            Sí
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={()=>abrirCerrarModalEliminar()}
+          >
+            No
+          </button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }
