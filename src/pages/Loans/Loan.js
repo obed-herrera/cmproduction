@@ -24,6 +24,8 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
+import { FaRegistered } from 'react-icons/fa';
+import {getClients} from '../../Requests';
 
 const paginacionOpciones={
   rowsPerPageText: 'Filas por Página',
@@ -81,6 +83,18 @@ function Loan() {
     loan_total_debth: '',
     selectedDate: new Date()
   });
+  const [client, setClients] = useState([]);
+  const [errorRequest, setErrorRequest] = useState(false);
+  const {register, watch} = useForm();
+  
+  useEffect(() => {
+		async function fetchInitialData() {
+			const response = await getClients();
+			response.errors ? setErrorRequest(true) : setClients(response);
+		}
+
+		fetchInitialData();
+	}, []);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -162,6 +176,7 @@ function Loan() {
       console.log(error);
     })
   }
+
 
   const peticionPost=async()=>{
     var f = new FormData();
@@ -261,8 +276,7 @@ function Loan() {
 <br />
       <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Crear Nuevo Prestamo</button>
       <br /><br />
-    <table className="table table-striped">
-      
+    <table className="table table-striped"> 
       <thead>
         <tr>
           <th>Cliente</th>
@@ -306,11 +320,33 @@ function Loan() {
             <Grid container spacing = {2} style = {{padding:20}}>
                 <Grid item xs ={4}>
                     <div className = "form-group">
-                        <label class = "pure-material-textfield-outlined">
+                        {/*<label class = "pure-material-textfield-outlined">
                             <input placeholder= " " type = "text" className = "form-control" name = "client_name" onChange = {handleChange}/>
                             <span>Cliente</span>
                         </label>
-                        <br/>
+        <br/>*/}
+                        <div className = "form-group">
+                        <FormControl className={classes.formControl}>
+                            <NativeSelect
+                              className={classes.selectEmpty}
+                              value={state.client_Name}
+                              name="client_name"
+                              onChange={handleChange}
+                              inputProps={{ 'aria-label': 'loan_client' }}
+                            >
+                              <option value="" disabled>
+                                Cliente
+                              </option>
+                              {client.map((value)=>(
+                                <option value = {value.client_first_name} key = {value.id_credi_client}>
+                                  {value.client_first_name}
+                                </option>
+                              ))}
+                              
+                            </NativeSelect>
+                            <FormHelperText>Plazo del Prestamo</FormHelperText>
+                          </FormControl>
+                        </div>
                         <div className = "form-group">
                         <FormControl className={classes.formControl}>
                             <NativeSelect
