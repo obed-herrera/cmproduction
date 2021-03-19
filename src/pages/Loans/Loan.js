@@ -18,6 +18,12 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from '@material-ui/pickers';
 
 const paginacionOpciones={
   rowsPerPageText: 'Filas por Página',
@@ -36,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const loanState = [
     {id: 'activo', title: 'Activo'},
     {id: 'inactivo', title: 'Inactivo'},
@@ -45,6 +52,8 @@ const clientState = [
   {id: 'activo', title: 'Activo'},
   {id: 'inactivo', title: 'Inactivo'},
 ]
+
+
 
 const onChangeTable=async e=>{
   e.persist();
@@ -68,8 +77,13 @@ function Loan() {
     money_type: '',
     loan_mount:'',
     loan_interest:'',
-    loan_line:''
+    loan_line:'',
+    loan_total_debth: '',
+    selectedDate: new Date()
   });
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const [clientSeleccionado, setClientSeleccionado]=useState({
     id_credi_client: '',
     client_first_name: '',
@@ -88,6 +102,13 @@ function Loan() {
 
   const [value, setValue] = React.useState('female');
 
+  const operaciones =()=>{
+    var ops ={
+      TotalDeuda: function TotalDeuda(n1,n2){
+        return ((parseInt(n1)*parseInt(n2))+parseInt(n1));
+      }
+    }
+  }
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -102,6 +123,10 @@ function Loan() {
     }))
     console.log(clientSeleccionado);
   }
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const handleChange=e=>{
     const {name, value}=e.target;
@@ -147,6 +172,7 @@ function Loan() {
     f.append("loan_mount", loanSeleccionado.loan_mount);
     f.append("loan_interest", loanSeleccionado.loan_interest);
     f.append("loan_line", loanSeleccionado.loan_line);
+    f.append("selectedDate", loanSeleccionado.selectedDate);
     f.append("METHOD", "POST");
     await axios.post(baseUrl, f)
     .then(response=>{
@@ -180,9 +206,9 @@ function Loan() {
     })
   }
 
-  /*const peticionPut=async()=>{
+  /*peticionPut=async()=>{
     var f = new FormData();
-    f.append("nombre", loanSeleccionado.nombre);
+    f.append("id_credi_loan", loanSeleccionado.id_credi_loan);
     f.append("lanzamiento", loanSeleccionado.lanzamiento);
     f.append("desarrollador", loanSeleccionado.desarrollador);
     f.append("METHOD", "PUT");
@@ -240,12 +266,11 @@ function Loan() {
       <thead>
         <tr>
           <th>Cliente</th>
-          <th>Plazo</th>
-          <th>Tipo de Pago</th>
           <th>Tipo de Moneda</th>
           <th>Monto</th>
           <th>Interes %</th>
           <th>Linea del Prestamo</th>
+          <th>Deuda Total</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -253,12 +278,11 @@ function Loan() {
         {data && data.map((credi_loan, index)=>(
           <tr key={index}>
             <td>{credi_loan.client_name}</td>
-            <td>{credi_loan.loan_term}</td>
-            <td>{credi_loan.loan_payment}</td>
             <td>{credi_loan.money_type}</td>
             <td>{credi_loan.loan_mount}</td>
             <td>{credi_loan.loan_interest}</td>
             <td>{credi_loan.loan_line}</td>
+            <td>{credi_loan.loan_total_debth}</td>
           <td>
           <Controls.Button
                         type = "submit"
@@ -327,11 +351,11 @@ function Loan() {
                               <option value="" disabled>
                                 Forma de pago
                               </option>
-                              <option value={'1'}>Diario</option>
-                              <option value={'1.5'}>Dia de por medio</option>
-                              <option value={'7'}>Semanal</option>
-                              <option value={'15'}>Quincenal</option>
-                              <option value={'30'}>Mensual</option>
+                              <option id = "1" value={'1'}>Diario</option>
+                              <option id = "2" value={'1.5'}>Dia de por medio</option>
+                              <option id = "3" value={'7'}>Semanal</option>
+                              <option id = "4" value={'15'}>Quincenal</option>
+                              <option id = "5" value={'30'}>Mensual</option>
                             </NativeSelect>
                             <FormHelperText>Forma de Pago</FormHelperText>
                           </FormControl>
@@ -351,7 +375,22 @@ function Loan() {
                             <span>Interés %</span>
                         </label>
                         <br/>
-                    </div>                                    
+                    </div>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Grid container justify="space-around">
+                        <KeyboardDatePicker
+                          margin="normal"
+                          id="date-picker-dialog"
+                          label="Date picker dialog"
+                          format="MM/dd/yyyy"
+                          value={selectedDate}
+                          onChange={handleDateChange}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </Grid>
+                    </MuiPickersUtilsProvider>                                  
                 </Grid>
                 <Grid item xs = {4}>
                   <div className = "form-group">
