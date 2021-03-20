@@ -81,7 +81,9 @@ function Loan() {
     loan_interest:'',
     loan_line:'',
     loan_total_debth: '',
-    selectedDate: new Date()
+    selectedDate: new Date(),
+    selectedDatePayment: new Date(),
+    selectedDatePaymentEnding: new Date()
   });
   const [client, setClients] = useState([]);
   const [errorRequest, setErrorRequest] = useState(false);
@@ -97,6 +99,8 @@ function Loan() {
 	}, []);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDatePayment, setSelectedDatePayment]=useState(new Date());
+  const [selectedDatePaymentEnding, setSelectedDatePaymentEnding]=useState(new Date());
 
   const [clientSeleccionado, setClientSeleccionado]=useState({
     id_credi_client: '',
@@ -140,6 +144,8 @@ function Loan() {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    setSelectedDatePayment(date);
+    setSelectedDatePaymentEnding(date);
   };
 
   const handleChange=e=>{
@@ -188,6 +194,8 @@ function Loan() {
     f.append("loan_interest", loanSeleccionado.loan_interest);
     f.append("loan_line", loanSeleccionado.loan_line);
     f.append("selectedDate", loanSeleccionado.selectedDate);
+    f.append("selectedDatePayment", loanSeleccionado.selectedDatePayment);
+    f.append("selectedDatePaymentEnding", loanSeleccionado.selectedDatePaymentEnding);
     f.append("METHOD", "POST");
     await axios.post(baseUrl, f)
     .then(response=>{
@@ -420,9 +428,10 @@ function Loan() {
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <Grid container justify="space-around">
                         <KeyboardDatePicker
+                          name= "selectedDate"
                           margin="normal"
                           id="date-picker-dialog"
-                          label="Date picker dialog"
+                          label="Fecha de Entrega del Préstamo"
                           format="MM/dd/yyyy"
                           value={selectedDate}
                           onChange={handleDateChange}
@@ -431,10 +440,44 @@ function Loan() {
                           }}
                         />
                       </Grid>
-                    </MuiPickersUtilsProvider>                                  
+                    </MuiPickersUtilsProvider> 
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Grid container justify="space-around">
+                        <KeyboardDatePicker
+                          name="selectedDatePayment"
+                          margin="normal"
+                          id="date-picker-dialog"
+                          label="Fecha de Inicio de Pago"
+                          format="MM/dd/yyyy"
+                          value={selectedDatePayment}
+                          onChange={handleDateChange}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </Grid>
+                    </MuiPickersUtilsProvider>                                
                 </Grid>
                 <Grid item xs = {4}>
                   <div className = "form-group">
+                    <div>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Grid container justify="space-around">
+                        <KeyboardDatePicker
+                          name="selectedDatePaymentEnding"
+                          margin="normal"
+                          id="date-picker-dialog"
+                          label="Fecha Final de Pago"
+                          format="MM/dd/yyyy"
+                          value={selectedDatePaymentEnding}
+                          onChange={handleDateChange}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </Grid>
+                    </MuiPickersUtilsProvider>
+                    </div>
                     <div>
                     <FormControl className={classes.formControl}>
                             <NativeSelect
