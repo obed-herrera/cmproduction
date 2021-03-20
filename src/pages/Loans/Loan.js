@@ -66,11 +66,20 @@ const onChangeTable=async e=>{
 function Loan() {
   const baseUrl="http://localhost/crediapi/loan.php";
   const baseUrl2="http://localhost/crediapi/client.php";
+  const baseUrl3="http://localhost/crediapi/payment.php";
   const [data, setData]=useState([]);
+  const [dataNew, setDataNew]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalInsertarNuevo, setModalInsertarNuevo]= useState(false);
-  const [modalEditar, setModalEditar]= useState(false);
+  const [modalPagar, setModalPagar]= useState(false);
   const [modalEliminar, setModalEliminar]= useState(false);
+  const [paymentSeleccionado, setpaymentSeleccionado] = useState({
+    id_credi_loan_payment: '',
+    client_name: '',
+    quota_number:'',
+    payment_mount:'',
+    id_credi_loan:''
+  });
   const [loanSeleccionado, setloanSeleccionado]=useState({
     id_credi_loan: '',
     client_name: '',
@@ -83,7 +92,8 @@ function Loan() {
     loan_total_debth: '',
     selectedDate: new Date(),
     selectedDatePayment: new Date(),
-    selectedDatePaymentEnding: new Date()
+    selectedDatePaymentEnding: new Date(),
+    credi_loan_code: ''
   });
   const [client, setClients] = useState([]);
   const [errorRequest, setErrorRequest] = useState(false);
@@ -166,8 +176,8 @@ function Loan() {
     setModalInsertarNuevo(!modalInsertarNuevo);
   }
 
-  const abrirCerrarModalEditar=()=>{
-    setModalEditar(!modalEditar);
+  const abrirCerrarModalPagar=()=>{
+    setModalPagar(!modalPagar);
   }
 
   const abrirCerrarModalEliminar=()=>{
@@ -178,6 +188,15 @@ function Loan() {
     await axios.get(baseUrl)
     .then(response=>{
       setData(response.data);
+    }).catch(error=>{
+      console.log(error);
+    })
+  }
+
+  const peticionGetPayments=async()=>{
+    await axios.get(baseUrl)
+    .then(response=>{
+      setData(response.dataNew);
     }).catch(error=>{
       console.log(error);
     })
@@ -196,6 +215,7 @@ function Loan() {
     f.append("selectedDate", loanSeleccionado.selectedDate);
     f.append("selectedDatePayment", loanSeleccionado.selectedDatePayment);
     f.append("selectedDatePaymentEnding", loanSeleccionado.selectedDatePaymentEnding);
+    f.append("credi_loan_code", loanSeleccionado.credi_loan_code);
     f.append("METHOD", "POST");
     await axios.post(baseUrl, f)
     .then(response=>{
@@ -229,28 +249,22 @@ function Loan() {
     })
   }
 
-  /*peticionPut=async()=>{
+  const peticionPostPayment=async()=>{
     var f = new FormData();
-    f.append("id_credi_loan", loanSeleccionado.id_credi_loan);
-    f.append("lanzamiento", loanSeleccionado.lanzamiento);
-    f.append("desarrollador", loanSeleccionado.desarrollador);
-    f.append("METHOD", "PUT");
-    await axios.post(baseUrl, f, {params: {id: frameworkSeleccionado.id}})
+    f.append("client_name", paymentSeleccionado.client_name);
+    f.append("client_second_name", clientSeleccionado.client_second_name);
+    f.append("client_middle_name", clientSeleccionado.client_middle_name);
+    f.append("client_last_name", clientSeleccionado.client_last_name);
+    f.append("client_national_id", clientSeleccionado.client_national_id);
+    f.append("METHOD", "POST");
+    await axios.post(baseUrl2, f)
     .then(response=>{
-      var dataNueva= data;
-      dataNueva.map(framework=>{
-        if(framework.id===frameworkSeleccionado.id){
-          framework.nombre=frameworkSeleccionado.nombre;
-          framework.lanzamiento=frameworkSeleccionado.lanzamiento;
-          framework.desarrollador=frameworkSeleccionado.desarrollador;
-        }
-      });
-      setData(dataNueva);
-      abrirCerrarModalEditar();
+      setData(data.concat(response.data));
+      abrirCerrarModalInsertarNuevo();
     }).catch(error=>{
       console.log(error);
     })
-  }*/
+  }
 
   const peticionDelete=async()=>{
     var f = new FormData();
@@ -268,7 +282,7 @@ function Loan() {
     setloanSeleccionado(credi_loan);
 
     (caso==="Editar")?
-    abrirCerrarModalEditar():
+    abrirCerrarModalPagar():
     abrirCerrarModalEliminar()
   }
 
@@ -287,18 +301,20 @@ function Loan() {
     <table className="table table-striped"> 
       <thead>
         <tr>
+          <th>Codigo del Prestamo</th>
           <th>Cliente</th>
           <th>Tipo de Moneda</th>
           <th>Monto</th>
           <th>Interes %</th>
           <th>Linea del Prestamo</th>
-          <th>Deuda Total</th>
+          <th>Prestamo realizado</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         {data && data.map((credi_loan, index)=>(
           <tr key={index}>
+            <td>{credi_loan.credi_loan_code}</td>
             <td>{credi_loan.client_name}</td>
             <td>{credi_loan.money_type}</td>
             <td>{credi_loan.loan_mount}</td>
@@ -338,6 +354,11 @@ function Loan() {
                             <span>Cliente</span>
                         </label>
         <br/>*/}
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "credi_loan_code" onChange = {handleChange}/>
+                            <span>Codigo del Prestamo</span>
+                        </label>
+                        <br/>
                         <div className = "form-group">
                         <FormControl className={classes.formControl}>
                             <NativeSelect
@@ -674,6 +695,54 @@ function Loan() {
                         color = "secondary"
                         onClick = {()=>abrirCerrarModalInsertarNuevo()}
                     />
+      </ModalFooter>
+    </Modal>
+    <Modal isOpen={modalPagar} contentClassName = "custom-modal-style-client">
+      <ModalHeader>Realizar Pago</ModalHeader>
+      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Realizar pago</button>
+      <ModalBody>
+          <div>
+            <table className="table table-striped"> 
+              <thead>
+                <tr>
+                  <th>Codigo del Prestamo</th>
+                  <th>Cliente</th>
+                  <th>Número de Cuota</th>
+                  <th>Monto de la Cuota</th>
+                  <th>ID del Prestamo</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+            <tbody>
+            {dataNew && dataNew.map((loan_payment, index)=>(
+            <tr key={index}>
+                <td>{loan_payment.credi_loan_code}</td>
+                <td>{loan_payment.client_name}</td>
+                <td>{loan_payment.quota_number}</td>
+                <td>{loan_payment.payment_mount}</td>
+                <td>{loan_payment.id_credi_loan}</td>
+              <td>
+                {/*<Controls.Button
+                  type = "submit"
+                  text = "Pagar"
+                  /*color = "default"
+                  onClick = {()=>seleccionarloan(credi_loan, "Editar")}
+                  /> {"  "}
+                <Controls.Button
+                  text = "Eliminar"
+                  color = "default"
+                  onClick = {()=>seleccionarloan(credi_loan, "Eliminar")}
+                />*/}
+              </td>
+            </tr>
+            ))}
+            </tbody> 
+          </table>
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <button className="btn btn-primary" onClick={()=>peticionPostPayment()}>Editar</button>{"   "}
+        <button className="btn btn-danger" onClick={()=>abrirCerrarModalPagar()}>Cancelar</button>
       </ModalFooter>
     </Modal>
     <Modal isOpen={modalEliminar}>
