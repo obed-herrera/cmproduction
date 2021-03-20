@@ -4,3 +4,10 @@
    left: -50%;
    top: 50%; 
 }
+
+.custom-modal-style-payment {
+    width: 600px;
+   height: 380px;
+   left: -20%;
+   top: 50%; 
+}

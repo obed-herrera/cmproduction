@@ -71,10 +71,12 @@ function Loan() {
   const [dataNew, setDataNew]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalInsertarNuevo, setModalInsertarNuevo]= useState(false);
+  const [modalInsertarPayment, setModalInsertarPayment]=useState(false);
   const [modalPagar, setModalPagar]= useState(false);
   const [modalEliminar, setModalEliminar]= useState(false);
   const [paymentSeleccionado, setpaymentSeleccionado] = useState({
     id_credi_loan_payment: '',
+    credi_loan_code: '',
     client_name: '',
     quota_number:'',
     payment_mount:'',
@@ -178,6 +180,10 @@ function Loan() {
 
   const abrirCerrarModalPagar=()=>{
     setModalPagar(!modalPagar);
+  }
+
+  const abrirCerrarModalInsertarPayment=()=>{
+    setModalInsertarPayment(!modalInsertarPayment);
   }
 
   const abrirCerrarModalEliminar=()=>{
@@ -699,7 +705,7 @@ function Loan() {
     </Modal>
     <Modal isOpen={modalPagar} contentClassName = "custom-modal-style-client">
       <ModalHeader>Realizar Pago</ModalHeader>
-      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Realizar pago</button>
+      <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertarPayment()}>Realizar pago</button>
       <ModalBody>
           <div>
             <table className="table table-striped"> 
@@ -741,8 +747,71 @@ function Loan() {
         </div>
       </ModalBody>
       <ModalFooter>
-        <button className="btn btn-primary" onClick={()=>peticionPostPayment()}>Editar</button>{"   "}
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalPagar()}>Cancelar</button>
+      </ModalFooter>
+    </Modal>
+    <Modal isOpen={modalInsertarPayment} contentClassName = "custom-modal-style-payment">
+      <ModalHeader>Registrar Pago</ModalHeader>
+      <ModalBody>
+            <Grid container spacing = {2} style = {{padding:20}}>
+                <Grid item xs ={4}>
+                    <div className = "form-group">           
+                        <div className = "form-group">
+                        <FormControl className={classes.formControl}>
+                            <NativeSelect
+                              className={classes.selectEmpty}
+                              value={loanSeleccionado.client_name}
+                              name="client_name"
+                              onChange={handleChange}
+                              inputProps={{ 'aria-label': 'loan_client' }}
+                            >
+                              <option value="" disabled>
+                                Cliente
+                              </option>
+                              {client.map((value)=>(
+                                <option value = {value.client_name} key = {value.id_credi_client}>
+                                  {value.client_first_name}{' '}{value.client_middle_name}
+                                </option>
+                              ))}
+                            </NativeSelect>
+                            <FormHelperText>Cliente del Prestamo</FormHelperText>
+                          </FormControl>
+                        </div>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "credi_loan_code" onChange = {handleChange} value = {loanSeleccionado.credi_loan_code}/>
+                            <span>Codigo del Prestamo</span>
+                        </label>
+                        <br/>
+                    </div>
+                </Grid>
+                <Grid item xs ={4}> 
+                    <div className = "form-group">
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "quota_number" onChange = {handleChange}/>
+                            <span>Numero de Cuota</span>
+                        </label>
+                        <br/>
+                        <label class = "pure-material-textfield-outlined">
+                            <input placeholder= " " type = "text" className = "form-control" name = "payment_mount" onChange = {handleChange}/>
+                            <span>Monto pagado</span>
+                        </label>
+                        <br/>
+                    </div>                              
+                </Grid>
+            </Grid>
+      </ModalBody>
+      <ModalFooter>
+        <Controls.Button
+                        /*type = "submit"*/
+                        text = "Insertar"
+                        /*color = "default"*/
+                        onClick = {()=>peticionPostPayment()}
+                    /> {"  "}
+          <Controls.Button
+                        text = "Cancelar"
+                        color = "secondary"
+                        onClick = {()=>abrirCerrarModalInsertarPayment()}
+                    />
       </ModalFooter>
     </Modal>
     <Modal isOpen={modalEliminar}>
