@@ -357,7 +357,7 @@ function Loan() {
                               ))}
                               
                             </NativeSelect>
-                            <FormHelperText>Plazo del Prestamo</FormHelperText>
+                            <FormHelperText>Cliente del Prestamo</FormHelperText>
                           </FormControl>
                         </div>
                         <div className = "form-group">
