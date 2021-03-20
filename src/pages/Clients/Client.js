@@ -16,6 +16,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import MaterialTable from 'material-table';
+import {getLines} from '../../Requests';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -36,6 +37,7 @@ function Client() {
 
 
   const baseUrl="http://localhost/crediapi/client.php";
+  const baseUrl2="http://localhost/crediapi/line.php";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalEditar, setModalEditar]= useState(false);
@@ -55,6 +57,19 @@ function Client() {
     client_phone: '',
     client_creation_date: new Date()
   });
+
+  const [line, setLines] = useState([]);
+  const [errorRequest, setErrorRequest] = useState(false);
+  const {register, watch} = useForm();
+
+  useEffect(() => {
+		async function fetchInitialData() {
+			const response = await getLines();
+			response.errors ? setErrorRequest(true) : setLines(response);
+		}
+
+		fetchInitialData();
+	}, []);
 
   const [q, setQ] = useState("");
 
@@ -193,7 +208,7 @@ function Client() {
       {/*<button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar Cliente</button>*/}
       <br /><br />
     <div>
-    <input class="form-control"  value="btn-search" onChange={(text) => this.filter(text)}/>
+    {/*<input class="form-control"  value="btn-search" onChange={() => this.filter()}/>*/}
     </div>
     <table className="table table-striped">
       <thead>
@@ -314,37 +329,28 @@ function Client() {
                       </NativeSelect>
                       <FormHelperText>Estado del Trabajador</FormHelperText>
                     </FormControl>
-                    <FormControl className={classes.formControl}>
-                      <NativeSelect
-                        className={classes.selectEmpty}
-                        value={state.client_Line}
-                        name="client_line"
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'client_line' }}
-                      >
-                        <option value="" disabled>
-                          Linea del Cliente
-                        </option>
-                        <option value={'Mercado Huembes'}>Mercado Huembes</option>
-                        <option value={'Mercado Oriental'}>Mercado Oriental</option>
-                        <option value={'Montetabor'}>Montetabor</option>
-                        <option value={'Ticomo'}>Ticomo</option>
-                        <option value={'San Jose O.'}>San Jose O.</option>
-                        <option value={'Cuajachillo'}>Cuajachillo</option>
-                        <option value={'Ciudad Sandino'}>Ciudad Sandino</option>
-                        <option value={'Villa Reconciliacion'}>Villa Reconciliacion</option>
-                        <option value={'Bello Amanecer 1'}>Bello Amanecer 1</option>
-                        <option value={'Bello Amanecer 2'}>Bello Amanecer 2</option>
-                        <option value={'Bello Amanecer 3'}>Bello Amanecer 3</option>
-                        <option value={'Bello Amanecer 4'}>Bello Amanecer 4</option>
-                        <option value={'Giorgino Andrae'}>Giorgino Andrae</option>
-                        <option value={'Los Brasiles'}>Los Brasiles</option>
-                        <option value={'Bella Cruz'}>Bella Cruz</option>
-                        <option value={'Zona 3'}>Zona 3</option>
-                        <option value={'Pulperia'}>Pulperia</option>
-                      </NativeSelect>
-                      <FormHelperText>Linea del Cliente</FormHelperText>
-                    </FormControl>
+                      <div className = "form-group">
+                        <FormControl className={classes.formControl}>
+                            <NativeSelect
+                              className={classes.selectEmpty}
+                              value={state.client_Line}
+                              name="client_line"
+                              onChange={handleChange}
+                              inputProps={{ 'aria-label': 'client_line' }}
+                            >
+                              <option value="" disabled>
+                                Linea del Cliente
+                              </option>
+                              {line.map((value)=>(
+                                <option value = {value.client_line} key = {value.id_credi_client_line}>
+                                  {value.client_line}
+                                </option>
+                              ))}
+                              
+                            </NativeSelect>
+                            <FormHelperText>Linea del Cliente</FormHelperText>
+                          </FormControl>
+                      </div>
                   </div>
                 </Grid>
             </Grid>
@@ -366,17 +372,17 @@ function Client() {
                         </label>
                         <br/>
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "client_second_name" onChange = {handleChange}/>
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_second_name" onChange = {handleChange} value = {clientSeleccionado && clientSeleccionado.client_second_name}/>
                             <span>Segundo Nombre</span> 
                         </label>
                         <br/>
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "client_middle_name" onChange = {handleChange}/>
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_middle_name" onChange = {handleChange} value = {clientSeleccionado && clientSeleccionado.client_middle_name}/>
                             <span>Primer Apellido</span> 
                         </label>
                         <br/>
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "client_last_name" onChange = {handleChange}/>
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_last_name" onChange = {handleChange} value = {clientSeleccionado && clientSeleccionado.client_last_name}/>
                             <span>Segundo Apellido</span> 
                         </label>
                         <br/>
@@ -386,22 +392,22 @@ function Client() {
                 <Grid item xs ={4}> 
                     <div className = "form-group">
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "client_national_id" onChange = {handleChange}/>
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_national_id" onChange = {handleChange} value = {clientSeleccionado && clientSeleccionado.client_national_id}/>
                             <span>Cedula del Cliente</span> 
                         </label>
                         <br/>
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "client_sys_code" onChange = {handleChange}/>
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_sys_code" onChange = {handleChange} value = {clientSeleccionado && clientSeleccionado.client_sys_code}/>
                             <span>Codigo del Cliente</span> 
                         </label>
                         <br/>
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "client_home_address" onChange = {handleChange}/>
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_home_address" onChange = {handleChange} value = {clientSeleccionado && clientSeleccionado.client_home_address}/>
                             <span>Direccion de casa</span> 
                         </label>
                         <br/>
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "client_business_address" onChange = {handleChange}/>
+                            <input placeholder= " " type = "text" className = "form-control" name = "client_business_address" onChange = {handleChange} value = {clientSeleccionado && clientSeleccionado.client_business_address}/>
                             <span>Direccion de negocio</span> 
                         </label>
                         <br/>
@@ -410,7 +416,7 @@ function Client() {
                 <Grid item xs = {4}>
                   <div className = "form-group">
                   <label class = "pure-material-textfield-outlined">
-                      <input placeholder= " " type = "text" className = "form-control" name = "client_phone" onChange = {handleChange}/>
+                      <input placeholder= " " type = "text" className = "form-control" name = "client_phone" onChange = {handleChange} value = {clientSeleccionado && clientSeleccionado.client_phone}/>
                       <span>Telefono del Cliente</span> 
                     </label>
                     <br/>
@@ -419,7 +425,7 @@ function Client() {
                         className={classes.selectEmpty}
                         value={state.client_state}
                         name="client_state"
-                        onChange={handleChange}
+                        onChange={handleChange} 
                         inputProps={{ 'aria-label': 'client_state' }}
                       >
                         <option value="" disabled>
@@ -430,37 +436,28 @@ function Client() {
                       </NativeSelect>
                       <FormHelperText>Estado del Trabajador</FormHelperText>
                     </FormControl>
-                    <FormControl className={classes.formControl}>
-                      <NativeSelect
-                        className={classes.selectEmpty}
-                        value={state.client_Line}
-                        name="client_line"
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'client_line' }}
-                      >
-                        <option value="" disabled>
-                          Linea del Cliente
-                        </option>
-                        <option value={'Mercado Huembes'}>Mercado Huembes</option>
-                        <option value={'Mercado Oriental'}>Mercado Oriental</option>
-                        <option value={'Montetabor'}>Montetabor</option>
-                        <option value={'Ticomo'}>Ticomo</option>
-                        <option value={'San Jose O.'}>San Jose O.</option>
-                        <option value={'Cuajachillo'}>Cuajachillo</option>
-                        <option value={'Ciudad Sandino'}>Ciudad Sandino</option>
-                        <option value={'Villa Reconciliacion'}>Villa Reconciliacion</option>
-                        <option value={'Bello Amanecer 1'}>Bello Amanecer 1</option>
-                        <option value={'Bello Amanecer 2'}>Bello Amanecer 2</option>
-                        <option value={'Bello Amanecer 3'}>Bello Amanecer 3</option>
-                        <option value={'Bello Amanecer 4'}>Bello Amanecer 4</option>
-                        <option value={'Giorgino Andrae'}>Giorgino Andrae</option>
-                        <option value={'Los Brasiles'}>Los Brasiles</option>
-                        <option value={'Bella Cruz'}>Bella Cruz</option>
-                        <option value={'Zona 3'}>Zona 3</option>
-                        <option value={'Pulperia'}>Pulperia</option>
-                      </NativeSelect>
-                      <FormHelperText>Linea del Cliente</FormHelperText>
-                    </FormControl>
+                      <div className = "form-group">
+                        <FormControl className={classes.formControl}>
+                            <NativeSelect
+                              className={classes.selectEmpty}
+                              value={state.client_Line}
+                              name="client_line"
+                              onChange={handleChange}
+                              inputProps={{ 'aria-label': 'client_line' }}
+                            >
+                              <option value="" disabled>
+                                Linea del Cliente
+                              </option>
+                              {line.map((value)=>(
+                                <option value = {value.client_line} key = {value.id_credi_client_line}>
+                                  {value.client_line}
+                                </option>
+                              ))}
+                              
+                            </NativeSelect>
+                            <FormHelperText>Linea del Cliente</FormHelperText>
+                          </FormControl>
+                      </div>
                   </div>
                 </Grid>
             </Grid>
