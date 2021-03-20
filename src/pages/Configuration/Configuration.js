@@ -39,14 +39,16 @@ export default function Configuration(){
                         </Button>
                         </Link>
                     </Grid>
+                    <Link to = '/createline'>
                     <Button
                         variant = "container"
                         color = "default"
                         className = {classes.button}
                         startIcon = {<DeleteIcon/>}
                     >
-                    Futura configuracion 
+                    Crear nueva linea 
                     </Button>
+                    </Link>
                     <Button
                         variant = "container"
                         color = "secondary"
