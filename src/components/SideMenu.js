@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Component} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
@@ -9,6 +9,9 @@ import SubMenu from './SubMenu';
 import {AppBar, Toolbar, makeStyles, Grid, IconButton, Typography} from '@material-ui/core'
 import Today from '@material-ui/icons/Today';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const Nav = styled.div`
   background: #62BA75;
@@ -61,44 +64,55 @@ const SidebarWrap = styled.div`
   width: 100%;
 `;
 
-const SideMenu = () => {
+const cerrarSesion=()=>{
+  cookies.remove('id_credi_user', {path: "/"});
+  cookies.remove('username', {path: "/"});
+  window.location.href='./login';
+}
+
+const componentDidMount = ()=> {
+  if(!cookies.get('username')){
+      window.location.href="./";
+  }
+}
+
+const SideMenu = ()=>{
+
   const [sidebar, setSidebar] = useState(false);
-
   const showSidebar = () => setSidebar(!sidebar);
-
-  return (
-    <>
-      <IconContext.Provider value={{ color: '#fff' }}>
-        <Nav>
-          <NavIcon to='#'>
-            <FaIcons.FaBars onClick={showSidebar} />   
-          </NavIcon>
-          <NavText>
-            <Typography variant = "h4" color = "textPrimary">CrediMarket</Typography>
-          </NavText>
-          <NavPowerIcon>
-          <Grid item>
-            <Link to = '/login'>
-              <IconButton >
-                <PowerSettingsNewIcon  />
-              </IconButton>
-            </Link>
-          </Grid>
-          </NavPowerIcon>
-        </Nav>
-        <SidebarNav sidebar={sidebar}>
-          <SidebarWrap>
+  
+    return (
+      <>
+        <IconContext.Provider value={{ color: '#fff' }}>
+          <Nav>
             <NavIcon to='#'>
-              <AiIcons.AiOutlineClose onClick={showSidebar} />
+              <FaIcons.FaBars onClick={showSidebar} />   
             </NavIcon>
-            {SideMenuData.map((item, index) => {
-              return <SubMenu item={item} key={index} />;
-            })}
-          </SidebarWrap>
-        </SidebarNav>
-      </IconContext.Provider>
-    </>
-  );
-};
+            <NavText>
+              <Typography variant = "h4" color = "textPrimary">CrediMarket</Typography>
+            </NavText>
+            <NavPowerIcon>
+            <Grid item>
+                <IconButton >
+                  <PowerSettingsNewIcon onClick={()=>cerrarSesion()} />
+                </IconButton>
+
+            </Grid>
+            </NavPowerIcon>
+          </Nav>
+          <SidebarNav sidebar={sidebar}>
+            <SidebarWrap>
+              <NavIcon to='#'>
+                <AiIcons.AiOutlineClose onClick={showSidebar} />
+              </NavIcon>
+              {SideMenuData.map((item, index) => {
+                return <SubMenu item={item} key={index} />;
+              })}
+            </SidebarWrap>
+          </SidebarNav>
+        </IconContext.Provider>
+      </>
+    );
+  }
 
 export default SideMenu;
