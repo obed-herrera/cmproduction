@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+
 
 function Copyright() {
     return (
@@ -59,6 +61,28 @@ function Copyright() {
   
   export default function Login() {
     const classes = useStyles();
+    const state = {
+      form:{
+        credi_username:'',
+        credi_password:''
+      }
+    }
+
+    const baseUrl="http://localhost/crediapi/user.php";
+    const [userSeleccionado, setUserSeleccionado] = useState([]);
+
+    const handleChange = async e =>{
+      await this.setState({
+        form:{
+          ...this.state.form,
+          [e.target.name]: e.target.value
+        }
+      });
+    }
+
+    const iniciarSesion = async()=>{
+      await axios.get(baseUrl, {param: {credi_username: this.state.form.credi_username, credi_password: this.state.form.credi_password}})
+    }
   
     return (
       <Grid container component="main" className={classes.root}>
