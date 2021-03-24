@@ -15,7 +15,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import MaterialTable from 'material-table';
-import "./CreateUserStyles.css"
+import "./CreateUserStyles.css";
+import md5 from 'md5';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -83,7 +84,7 @@ function CreateUser() {
   const peticionPost=async()=>{
     var f = new FormData();
     f.append("username", userSeleccionado.username);
-    f.append("credi_password", userSeleccionado.credi_password);
+    f.append("credi_password", md5(userSeleccionado.credi_password));
     f.append("user_role", userSeleccionado.user_role);
     f.append("user_state", userSeleccionado.user_state);
     f.append("METHOD", "POST");
@@ -109,7 +110,7 @@ function CreateUser() {
       dataNueva && dataNueva.map(user=>{
         if(user.id_credi_user===userSeleccionado.id_credi_user){
           user.username=userSeleccionado.username;
-          user.credi_password=userSeleccionado.credi_password;
+          user.credi_password=md5(userSeleccionado.credi_password);
           user.user_role=userSeleccionado.user_role;
           user.user_state=userSeleccionado.user_state;
         }
