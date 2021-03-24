@@ -58,7 +58,7 @@ function App(){
       <Router>
       
         <Switch>
-        <Route path = '/login' component = {Login}/>
+        <Route exact path = "/" component = {Login}/>
         <div>
         <SideMenu/>
           <Route path = '/employee' component = {Employee}/>

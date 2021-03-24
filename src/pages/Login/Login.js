@@ -162,7 +162,7 @@ function Copyright() {
   import Cookies from 'universal-cookie';
   import "./Login.css";
 
-  const baseUrl="http://localhost/crediapi/login.php";
+  const baseUrl="http://localhost/crediapi/login,php";
   const cookies = new Cookies();
 
   class Login extends Component{
@@ -190,7 +190,6 @@ function Copyright() {
       .then(response=>{
           if(response.length>0){
               var respuesta=response[0];
-              cookies.set('id_credi_user', respuesta.id_credi_user, {path: "/"});
               cookies.set('username', respuesta.username, {path: "/"});
               alert(`Bienvenido ${respuesta.username}`);
               window.location.href="./home";
@@ -206,7 +205,7 @@ function Copyright() {
 
   componentDidMount() {
     if(cookies.get('username')){
-        window.location.href="./";
+        window.location.href="./home";
     }
 }
 

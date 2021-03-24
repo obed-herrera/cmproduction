@@ -67,7 +67,7 @@ const SidebarWrap = styled.div`
 const cerrarSesion=()=>{
   cookies.remove('id_credi_user', {path: "/"});
   cookies.remove('username', {path: "/"});
-  window.location.href='./login';
+  window.location.href='./';
 }
 
 const componentDidMount = ()=> {
