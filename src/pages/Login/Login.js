@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Component} from 'react';
+/*import React, {useState, useEffect, Component, setState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import md5 from 'md5';
+import Cookies from 'universal-cookie';
 
 
 function Copyright() {
@@ -63,25 +65,37 @@ function Copyright() {
     const classes = useStyles();
     const state = {
       form:{
-        credi_username:'',
+        username:'',
         credi_password:''
       }
     }
 
-    const baseUrl="http://localhost/crediapi/user.php";
+    const baseUrl="http://localhost/crediapi/login.php";
+    const cookies = new Cookies();
     const [userSeleccionado, setUserSeleccionado] = useState([]);
 
-    const handleChange = async e =>{
-      await this.setState({
-        form:{
-          ...this.state.form,
-          [e.target.name]: e.target.value
-        }
-      });
-    }
 
     const iniciarSesion = async()=>{
-      await axios.get(baseUrl, {param: {credi_username: this.state.form.credi_username, credi_password: this.state.form.credi_password}})
+      await axios.get(baseUrl, {param: {username: this.state.form.username, credi_password: md5(this.state.form.credi_password)}})
+      .then(response=>{
+        return response.data;
+      })
+      .then(response=>{
+        if(response.length>0){
+          var respuesta=response[0];
+          cookies.set('id'. respuesta.id_credi_user, {path:"/"});
+          cookies.set('username'. respuesta.username, {path:"/"});
+          cookies.set('user_role'. respuesta.user_role, {path:"/"});
+          cookies.set('user_state'. respuesta.user_state, {path:"/"});
+          alert(`Bienvenido ${respuesta.username}`);
+          window.location.href="./home";
+        }else{
+          alert('El usuario o la contraseña son incorrectos');
+        }
+      })
+      .catch(error=>{
+        console.log(error);
+      })
     }
   
     return (
@@ -113,21 +127,24 @@ function Copyright() {
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="credi_password"
                 label="Constraseña"
                 type="password"
                 id="password"
                 autoComplete="current-password"
               />
+              <Link to = '/home'>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={()=>iniciarSesion()}
               >
                   Ingresar
               </Button>
+              </Link>
               <Box mt={5}>
                 <Copyright />
               </Box>
@@ -136,4 +153,92 @@ function Copyright() {
         </Grid>
       </Grid>
     );
+  }*/
+
+  import React, {Component} from 'react';
+  import 'bootstrap/dist/css/bootstrap.min.css';
+  import axios from 'axios';
+  import md5 from 'md5';
+  import Cookies from 'universal-cookie';
+  import "./Login.css";
+
+  const baseUrl="http://localhost/crediapi/login.php";
+  const cookies = new Cookies();
+
+  class Login extends Component{
+    state={
+      form: {
+        username:'',
+        credi_password: ''
+      }
+    }
+
+    handleChange=async e=>{
+      await this.setState({
+        form:{
+          ...this.state.form,
+          [e.target.name]: e.target.value
+        }
+      });
+    }
+
+    iniciarSesion=async()=>{
+      await axios.get(baseUrl, {params: {username: this.state.form.username, credi_password: md5(this.state.form.credi_password)}})
+      .then(response=>{
+          return response.data;
+      })
+      .then(response=>{
+          if(response.length>0){
+              var respuesta=response[0];
+              cookies.set('id_credi_user', respuesta.id_credi_user, {path: "/"});
+              cookies.set('username', respuesta.username, {path: "/"});
+              alert(`Bienvenido ${respuesta.username}`);
+              window.location.href="./home";
+          }else{
+              alert('El usuario o la contraseña no son correctos');
+          }
+      })
+      .catch(error=>{
+          console.log(error);
+      })
+
   }
+
+  componentDidMount() {
+    if(cookies.get('username')){
+        window.location.href="./";
+    }
+}
+
+
+    render(){
+      return(
+        <div className = "containerPrincipal">
+          <div className = "containerSecundario">
+          <div className = "form-group">
+            <label>Usuario: </label>
+            <br/>
+            <input
+              type = "text"
+              className = "form-control"
+              name = "username"
+              onChange = {this.handleChange}
+            />
+            <label>Contraseña: </label>
+            <br/>
+            <input
+              type = "password"
+              className = "form-control"
+              name = "credi_password"
+              onChange= {this.handleChange}
+            />
+            <br/>
+            <button className = "btn btn-primary" onClick = {()=>this.iniciarSesion()}>Iniciar Sesion</button>
+          </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  export default Login
