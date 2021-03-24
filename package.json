@@ -29,6 +29,7 @@
     "reactstrap": "^8.9.0",
     "styled-components": "^5.2.1",
     "table": "^6.0.7",
+    "universal-cookie": "^4.0.4",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
