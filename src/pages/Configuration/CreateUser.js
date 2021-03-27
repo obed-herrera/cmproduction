@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useState, useEffect, Component, useContext} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
@@ -17,6 +17,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import MaterialTable from 'material-table';
 import "./CreateUserStyles.css";
 import md5 from 'md5';
+import { sub } from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 function CreateUser() {
 
-    const baseUrl="http://localhost/crediapi/user.php";
+  const baseUrl="http://localhost/crediapi/user.php";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalEditar, setModalEditar]= useState(false);
@@ -43,12 +44,9 @@ function CreateUser() {
     user_state: ''
   });
 
-  const [q, setQ] = useState("");
+  const [state, setState]=useState([]);
 
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    client_line: '',
-  });
 
   const handleChange=e=>{
     const {name, value}=e.target;
@@ -79,7 +77,6 @@ function CreateUser() {
       console.log(error);
     })
   }
-
 
   const peticionPost=async()=>{
     var f = new FormData();
@@ -156,7 +153,6 @@ function CreateUser() {
                         color = "default"
                         onClick = {()=>abrirCerrarModalInsertar()}
                     />
-      {/*<button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar Cliente</button>*/}
       <br /><br />
     <table className="table table-striped">
       <thead>
@@ -175,7 +171,6 @@ function CreateUser() {
           <Controls.Button
                         type = "submit"
                         text = "Editar"
-                        /*color = "default"*/
                         onClick = {()=>seleccionarUser(user, "Editar")}
                     /> {"  "}
           <Controls.Button
@@ -186,13 +181,8 @@ function CreateUser() {
           </td>
           </tr>
         ))}
-
-
       </tbody> 
-
     </table>
-
-
     <Modal isOpen={modalInsertar} contentClassName = "custom-modal-style">
       <ModalHeader>Insertar Usuario</ModalHeader>
       <ModalBody>
@@ -200,12 +190,12 @@ function CreateUser() {
                 <Grid item xs ={25}>
                     <div className = "form-group">
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "text" className = "form-control" name = "username" onChange = {handleChange}/>
+                        <input placeholder= " " type = "text" className = "form-control" name = "username" onChange = {handleChange}/>
                             <span>Usuario</span> 
                         </label>
                         <br/>
                         <label class = "pure-material-textfield-outlined">
-                            <input placeholder= " " type = "password" className = "form-control" name = "credi_password" onChange = {handleChange}/>
+                        <input placeholder= " " type = "text" className = "form-control" name = "password" onChange = {handleChange}/>
                             <span>Constraseña</span> 
                         </label>
                         <br/>
@@ -223,7 +213,7 @@ function CreateUser() {
                                 <option value={'Usuario Estandar'}>Usuario Estandar</option>
                                 <option value={'Super Administrador'}>Super Administrador</option>
                             </NativeSelect>
-                      <FormHelperText>Linea del Cliente</FormHelperText>
+                      <FormHelperText>Rol del Usuario</FormHelperText>
                     </FormControl>
                     <FormControl className={classes.formControl}>
                             <NativeSelect
@@ -243,12 +233,12 @@ function CreateUser() {
                     </FormControl>
                     </div>
                 </Grid>
-            </Grid>
+            </Grid>  
       </ModalBody>
-      <ModalFooter>
-        <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}
-        <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button>
-      </ModalFooter>
+        <ModalFooter>
+                <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}
+                <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button>
+        </ModalFooter>
     </Modal>
     <Modal isOpen={modalEditar} contentClassName = "custom-modal-style">
     <ModalHeader>Editar Usuario</ModalHeader>
@@ -287,7 +277,7 @@ function CreateUser() {
             </Grid>
       </ModalBody>
       <ModalFooter>
-        <button className="btn btn-primary" onClick={()=>peticionPut()}>Insertar</button>{"   "}
+        <button className="btn btn-primary" type = "submit">Insertar</button>{"   "}
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button>
       </ModalFooter>
     </Modal>
