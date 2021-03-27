@@ -64,9 +64,9 @@ const onChangeTable=async e=>{
 }
 
 function Loan() {
-  const baseUrl="http://credimarketnic.com/crediapi/loan.php";
-  const baseUrl2="http://credimarketnic.com/crediapi/client.php";
-  const baseUrl3="http://credimarketnic.com/crediapi/payment.php";
+  const baseUrl="https://credimarketnic.com/crediapi/loan.php";
+  const baseUrl2="https://credimarketnic.com/crediapi/client.php";
+  const baseUrl3="https://credimarketnic.com/crediapi/payment.php";
   const [data, setData]=useState([]);
   const [dataNew, setDataNew]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
