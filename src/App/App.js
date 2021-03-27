@@ -6,13 +6,12 @@ import Header from "../components/Header";
 import Home from '../pages/Home/Home';
 import Client from '../pages/Clients/Client';
 import Loan from '../pages/Loans/Loan';
+import Login from '../pages/Login/Login';
 import Employee from "../pages/Employees/Employee";
 import Configuration from "../pages/Configuration/Configuration";
-import Login from "../pages/Login/Login";
 import CreateUser from "../pages/Configuration/CreateUser";
 import CreateLine from "../pages/Configuration/CreateLine";
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
 
 const theme = createMuiTheme({
   palette:{
@@ -51,33 +50,44 @@ const useStyles = makeStyles({
  
 })
 
-function App(){
-  const classes = useStyles();
-  return(
-    <ThemeProvider theme = {theme}>
-      <Router>
-      
-        <Switch>
-        <Route exact path = "/" component = {Login}/>
-        <div>
-        <SideMenu/>
-          <Route path = '/employee' component = {Employee}/>
-          <Route path = '/client' component = {Client}/>
-          <Route path = '/home' component = {Home}/>
-          <Route path = '/loan' component = {Loan}/>
-          <Route path = '/configuration' component = {Configuration}/>
-          <Route path = '/createuser' component = {CreateUser}/>  
-          <Route path = '/createline' component = {CreateLine}/>   
-        </div>
-            
-        </Switch>
+class App extends React.Component{
+  state={
+    isLog:false
+  }
+
+  handleLogin = (isLog) => this.setState({isLog})
+  render(){
+    const {isLog} = this.state;
+    return(
+      <ThemeProvider theme = {theme}>
+        <Router>
         
-      </Router>
-    <div className = {classes.appMain}>    
-    </div>
-    <CssBaseline />
-    </ThemeProvider>
-  );
+          <Switch>
+            {
+              !isLog ?
+              <Route exact path = '/' render = {() =><Login isLogin = {this.handleLogin}/>}/>
+              :
+              <Route path = '/' render={()=><Home/>}/>
+            }
+          <div>
+          {/*<SideMenu/>
+            <Route path = '/employee' component = {Employee}/>
+            <Route path = '/client' component = {Client}/>
+            <Route exact path = "/home" component = {Home}/>
+            <Route path = '/loan' component = {Loan}/>
+            <Route path = '/configuration' component = {Configuration}/>
+            <Route path = '/createuser' component = {CreateUser}/>  
+          <Route path = '/createline' component = {CreateLine}/> */}  
+          </div>
+              
+          </Switch>
+          
+        </Router>
+      <CssBaseline />
+      </ThemeProvider>
+    );
+  }
+  
 }
 
 export default App;
