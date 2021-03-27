@@ -36,7 +36,7 @@ const EmployeeState = [
 ]
 
 function Employee() {
-  const baseUrl="http://localhost/crediapi/employee.php";
+  const baseUrl="http://credimarketnic.com/crediapi/employee.php";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalEditar, setModalEditar]= useState(false);

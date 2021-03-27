@@ -27,7 +27,7 @@ const initialFValues ={
 
 export default function ClientForm(){
 
-    const baseUrl = "http://localhost/crediapi/";
+    const baseUrl = "http://credimarketnic.com/crediapi/";
     const [data, setData] = useState([]);
 
     const peticionesGet = async()=>{
