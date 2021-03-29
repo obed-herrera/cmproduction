@@ -50,7 +50,7 @@ function Client() {
     client_creation_date: new Date()
   });
 
-  const [line, setLines] = useState([]);
+  const [lines, setLines] = useState([]);
   const [errorRequest, setErrorRequest] = useState(false);
   const {register, watch} = useForm();
 
@@ -329,7 +329,7 @@ function Client() {
                               <option value="" disabled>
                                 Linea del Cliente
                               </option>
-                              {line.map((value)=>(
+                              {lines.map((value)=>(
                                 <option value = {value.client_line} key = {value.id_credi_client_line}>
                                   {value.client_line}
                                 </option>
@@ -436,7 +436,7 @@ function Client() {
                               <option value="" disabled>
                                 Linea del Cliente
                               </option>
-                              {line.map((value)=>(
+                              {lines.map((value)=>(
                                 <option value = {value.client_line} key = {value.id_credi_client_line}>
                                   {value.client_line}
                                 </option>
