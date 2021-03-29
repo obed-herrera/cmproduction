@@ -1,21 +1,14 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
-import {Grid, TextField, makeStyles, emphasize} from '@material-ui/core';
-import  MultipleSelect from "../../controls/MultipleSelect";
-import * as clientServices from '../../services/clientServices';
+import {Grid, makeStyles} from '@material-ui/core';
 import "./ClientStyles.css";
-import {useForm, Form} from '../../components/useForm';
-import SideMenu from "../../components/SideMenu";
-import { AirlineSeatIndividualSuite } from '@material-ui/icons';
-import AsyncSelect from 'react-select/async';
+import {useForm} from '../../components/useForm';
 import Controls from "../../controls/Controls";
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import MaterialTable from 'material-table';
 import {getLines} from '../../Requests';
 
 const useStyles = makeStyles((theme) => ({
@@ -69,8 +62,6 @@ function Client() {
 
 		fetchInitialData();
 	}, []);
-
-  const [q, setQ] = useState("");
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -204,10 +195,8 @@ function Client() {
                         color = "default"
                         onClick = {()=>abrirCerrarModalInsertar()}
                     />
-      {/*<button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar Cliente</button>*/}
       <br /><br />
     <div>
-    {/*<input class="form-control"  value="btn-search" onChange={() => this.filter()}/>*/}
     </div>
     <table className="table table-striped">
       <thead>
