@@ -36,8 +36,7 @@ const clientState = [
 function Client() {
 
 
-  const baseUrl="http://localhost/crediapi/client.php";
-  const baseUrl2="http://localhost/crediapi/line.php";
+  const baseUrl="https://credimarket.com/crediapi/client.php";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalEditar, setModalEditar]= useState(false);

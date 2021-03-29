@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const url = axios.create({
-    baseURL: 'http://localhost/crediapi/',
+    baseURL: 'https://credimarket.com/crediapi/',
 });
 
 const url2 = axios.create({
-    baseURL: 'http://localhost/crediapi/',
+    baseURL: 'https://credimarket.com/crediapi/',
 });
 
 export const getClients = (body) =>{
