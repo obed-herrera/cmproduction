@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 const url = axios.create({
-    baseURL: 'https://credimarketnic.com/crediapi/client.php',
+    baseURL: 'http://localhost/crediapi/',
 });
 
 const url2 = axios.create({
-    baseURL: 'https://credimarketnic.com/crediapi/line.php',
+    baseURL: 'http://localhost/crediapi/',
 });
 
 export const getClients = (body) =>{
     let result = url
-    .get('/client')
+    .get('/client.php')
     .then((response)=>{
         return response.data;
     }).catch((error)=>{
@@ -21,7 +21,7 @@ export const getClients = (body) =>{
 
 export const getLines = (body) =>{
     let result = url2
-    .get('/line')
+    .get('/line.php')
     .then((response)=>{
         return response.data;
     }).catch((error)=>{
