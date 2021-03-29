@@ -2,37 +2,27 @@ import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
-import {Grid, TextField, makeStyles} from '@material-ui/core';
-import  MultipleSelect from "../../controls/MultipleSelect";
-import * as loanServices from '../../services/loanServices';
+import {Grid, makeStyles} from '@material-ui/core';
 import "./LoanStyles.css";
-import {useForm, Form} from '../../components/useForm';
-import SideMenu from "../../components/SideMenu";
+import {useForm} from '../../components/useForm';
 import Controls from "../../controls/Controls";
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
-import { FaRegistered } from 'react-icons/fa';
 import {getClients} from '../../Requests';
 
-const paginacionOpciones={
+/*const paginacionOpciones={
   rowsPerPageText: 'Filas por Página',
   rangeSeparatorText: 'de',
   selectAlllRowsItem: true,
   selectAllRowsItemText: 'Todos',
-}
+}*/
 
 const useStyles = makeStyles((theme) => ({
   formControl: {

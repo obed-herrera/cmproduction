@@ -4,7 +4,6 @@ import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
 import {Grid, makeStyles} from '@material-ui/core';
 import "./ClientStyles.css";
-import {useForm} from '../../components/useForm';
 import Controls from "../../controls/Controls";
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
@@ -21,16 +20,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const clientState = [
-    {id: 'activo', title: 'Activo'},
-    {id: 'inactivo', title: 'Inactivo'},
-]
-
 function Client() {
 
 
   const baseUrl="https://credimarketnic.com/crediapi/client.php";
-  const [data, setData]=useState([]);
+  const [formdata, setFormData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalEditar, setModalEditar]= useState(false);
   const [modalEliminar, setModalEliminar]= useState(false);
@@ -51,8 +45,6 @@ function Client() {
   });
 
   const [lines, setLines] = useState([]);
-  const [errorRequest, setErrorRequest] = useState(false);
-  const {register, watch} = useForm();
 
   useEffect(() => {
 		async function fetchInitialData() {
@@ -92,7 +84,7 @@ function Client() {
   const peticionGet=async()=>{
     await axios.get(baseUrl)
     .then(response=>{
-      setData(response.data);
+      setFormData(response.formdata);
     }).catch(error=>{
       console.log(error);
     })
@@ -115,7 +107,7 @@ function Client() {
     f.append("METHOD", "POST");
     await axios.post(baseUrl, f)
     .then(response=>{
-      setData(data.concat(response.data));
+      setFormData(formdata.concat(response.formdata));
       abrirCerrarModalInsertar();
     }).catch(error=>{
       console.log(error);
@@ -138,7 +130,7 @@ function Client() {
     f.append("METHOD", "PUT");
     await axios.post(baseUrl, f, {params: {id: clientSeleccionado.id_credi_client}})
     .then(response=>{
-      var dataNueva= data;
+      var dataNueva= formdata;
       dataNueva && dataNueva.map(client=>{
         if(client.id_credi_client===clientSeleccionado.id_credi_client){
           client.client_first_name=clientSeleccionado.client_first_name;
@@ -154,7 +146,7 @@ function Client() {
           client.client_phone=clientSeleccionado.client_phone;
         }
       });
-      setData(dataNueva);
+      setFormData(dataNueva);
       abrirCerrarModalEditar();
     }).catch(error=>{
       console.log(error);
@@ -166,7 +158,7 @@ function Client() {
     f.append("METHOD", "DELETE");
     await axios.post(baseUrl, f, {params: {id_credi_client: clientSeleccionado.id_credi_client}})
     .then(response=>{
-      setData(data.filter(client=>client.id_credi_client!==clientSeleccionado.id_credi_client));
+      setFormData(formdata.filter(client=>client.id_credi_client!==clientSeleccionado.id_credi_client));
       abrirCerrarModalEliminar();
     }).catch(error=>{
       console.log(error);
@@ -211,7 +203,7 @@ function Client() {
         </tr>
       </thead>
       <tbody>
-        {data && data.map((client, index)=>(
+        {formdata && formdata.map((client, index)=>(
           <tr key={index}>
             <td>{client.client_sys_code}</td>
             <td>{client.client_first_name}</td>

@@ -7,7 +7,7 @@ import Configuration from "../Configuration/Configuration";
 import CreateUser from "../Configuration/CreateUser";
 import CreateLine from "../Configuration/CreateLine";
 import Loan from '../Loans/Loan';
-import {NavLink, Link} from 'react-router-dom';
+
 
 const Home = () =>{
     return(

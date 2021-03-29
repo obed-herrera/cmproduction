@@ -2,14 +2,10 @@ import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
-import {Grid, TextField, makeStyles} from '@material-ui/core';
-import  MultipleSelect from "../../controls/MultipleSelect";
-import * as EmployeeServices from '../../services/employeeServices';
+import {Grid, makeStyles} from '@material-ui/core';
 import "./EmployeeStyles.css";
-import {useForm, Form} from '../../components/useForm';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 
 

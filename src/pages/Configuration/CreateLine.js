@@ -1,20 +1,9 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
-import {Grid, TextField, makeStyles, emphasize} from '@material-ui/core';
-import  MultipleSelect from "../../controls/MultipleSelect";
-import * as clientServices from '../../services/clientServices';
-import {useForm, Form} from '../../components/useForm';
-import SideMenu from "../../components/SideMenu";
-import { AirlineSeatIndividualSuite } from '@material-ui/icons';
-import AsyncSelect from 'react-select/async';
+import {Grid, makeStyles} from '@material-ui/core';
 import Controls from "../../controls/Controls";
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import MaterialTable from 'material-table';
 import "./CreateLineStyles.css"
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +28,6 @@ function CreateLine() {
     clinet_line: ''
   });
 
-  const [q, setQ] = useState("");
 
   const classes = useStyles();
   const [state, setState] = React.useState({
