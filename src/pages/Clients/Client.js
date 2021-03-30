@@ -21,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Client() {
-
-
   const baseUrl="https://credimarketnic.com/crediapi/client.php";
   const [formdata, setFormData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
@@ -45,6 +43,7 @@ function Client() {
   });
 
   const [lines, setLines] = useState([]);
+  const [request, setErrorRequest] = useState();
 
   useEffect(() => {
 		async function fetchInitialData() {
