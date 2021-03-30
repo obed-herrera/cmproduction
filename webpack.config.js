@@ -6,7 +6,7 @@ module.exports = {
         contentBase: path.resolve(__dirname, "./src"),
         historyApiFallback: true
     },
-    entry = path.resolve(__dirname, "./src/index.js"),
+    entry: path.resolve(__dirname, "./src/index.js"),
     module:{
         rules:[
             {
