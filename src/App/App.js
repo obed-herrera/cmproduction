@@ -7,6 +7,7 @@ import Home from '../pages/Home/Home';
 import Client from '../pages/Clients/Client';
 import Loan from '../pages/Loans/Loan';
 import Login from '../pages/Login/Login';
+import Signin from '../pages/Login/Signin';
 import Employee from "../pages/Employees/Employee";
 import Configuration from "../pages/Configuration/Configuration";
 import CreateUser from "../pages/Configuration/CreateUser";
