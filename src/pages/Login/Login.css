@@ -19,7 +19,7 @@ input{
     border-radius: 5px;
 }
 
-button{
+.button-login{
     width: 100%;
     margin: 5px 0;
     background-color: dodgerblue;
