@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Client() {
-  const baseUrl="https://credimarketnic.com/crediapi/client.php";
-  const [formdata, setFormData]=useState([]);
+  const baseUrl="http://localhost/crediapi/client.php";
+  const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]= useState(false);
   const [modalEditar, setModalEditar]= useState(false);
   const [modalEliminar, setModalEliminar]= useState(false);
@@ -83,7 +83,7 @@ function Client() {
   const peticionGet=async()=>{
     await axios.get(baseUrl)
     .then(response=>{
-      setFormData(response.formdata);
+      setData(response.data);
     }).catch(error=>{
       console.log(error);
     })
@@ -91,7 +91,7 @@ function Client() {
 
 
   const peticionPost=async()=>{
-    var f = new FormData();
+    var f = new data();
     f.append("client_first_name", clientSeleccionado.client_first_name);
     f.append("client_second_name", clientSeleccionado.client_second_name);
     f.append("client_middle_name", clientSeleccionado.client_middle_name);
@@ -106,7 +106,7 @@ function Client() {
     f.append("METHOD", "POST");
     await axios.post(baseUrl, f)
     .then(response=>{
-      setFormData(formdata.concat(response.formdata));
+      setData(data.concat(response.data));
       abrirCerrarModalInsertar();
     }).catch(error=>{
       console.log(error);
@@ -114,7 +114,7 @@ function Client() {
   }
 
   const peticionPut=async()=>{
-    var f = new FormData();
+    var f = new data();
     f.append("client_first_name", clientSeleccionado.client_first_name);
     f.append("client_second_name", clientSeleccionado.client_second_name);
     f.append("client_middle_name", clientSeleccionado.client_middle_name);
@@ -129,7 +129,7 @@ function Client() {
     f.append("METHOD", "PUT");
     await axios.post(baseUrl, f, {params: {id: clientSeleccionado.id_credi_client}})
     .then(response=>{
-      var dataNueva= formdata;
+      var dataNueva= data;
       dataNueva && dataNueva.map(client=>{
         if(client.id_credi_client===clientSeleccionado.id_credi_client){
           client.client_first_name=clientSeleccionado.client_first_name;
@@ -145,7 +145,7 @@ function Client() {
           client.client_phone=clientSeleccionado.client_phone;
         }
       });
-      setFormData(dataNueva);
+      setData(dataNueva);
       abrirCerrarModalEditar();
     }).catch(error=>{
       console.log(error);
@@ -153,11 +153,11 @@ function Client() {
   }
 
   const peticionDelete=async()=>{
-    var f = new FormData();
+    var f = new data();
     f.append("METHOD", "DELETE");
     await axios.post(baseUrl, f, {params: {id_credi_client: clientSeleccionado.id_credi_client}})
     .then(response=>{
-      setFormData(formdata.filter(client=>client.id_credi_client!==clientSeleccionado.id_credi_client));
+      setData(data.filter(client=>client.id_credi_client!==clientSeleccionado.id_credi_client));
       abrirCerrarModalEliminar();
     }).catch(error=>{
       console.log(error);
@@ -197,19 +197,19 @@ function Client() {
           <th>Primer Apellido</th>
           <th>Cedula del Cliente</th>
           <th>Direccion de casa</th>
-          <th>Linea</th>
+          {/*<th>Linea</th>*/}
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        {formdata && formdata.map((client, index)=>(
+        {data && data.map((client, index)=>(
           <tr key={index}>
             <td>{client.client_sys_code}</td>
             <td>{client.client_first_name}</td>
             <td>{client.client_middle_name}</td>
             <td>{client.client_national_id}</td>
             <td>{client.client_home_address}</td>
-            <td>{client.client_line}</td>
+            {/*<td>{client.client_line}</td>*/}
           <td>
           <Controls.Button
                         type = "submit"
