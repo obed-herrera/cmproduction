@@ -308,7 +308,7 @@ function Client() {
                       </NativeSelect>
                       <FormHelperText>Estado del Trabajador</FormHelperText>
                     </FormControl>
-                      <div className = "form-group">
+                     {/* <div className = "form-group">
                         <FormControl className={classes.formControl}>
                             <NativeSelect
                               className={classes.selectEmpty}
@@ -329,7 +329,7 @@ function Client() {
                             </NativeSelect>
                             <FormHelperText>Linea del Cliente</FormHelperText>
                           </FormControl>
-                      </div>
+                              </div>*/}
                   </div>
                 </Grid>
             </Grid>
@@ -415,7 +415,7 @@ function Client() {
                       </NativeSelect>
                       <FormHelperText>Estado del Trabajador</FormHelperText>
                     </FormControl>
-                      <div className = "form-group">
+                     { /*<div className = "form-group">
                         <FormControl className={classes.formControl}>
                             <NativeSelect
                               className={classes.selectEmpty}
@@ -436,7 +436,7 @@ function Client() {
                             </NativeSelect>
                             <FormHelperText>Linea del Cliente</FormHelperText>
                           </FormControl>
-                      </div>
+                              </div>*/}
                   </div>
                 </Grid>
             </Grid>

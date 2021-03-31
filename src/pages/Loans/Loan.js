@@ -356,7 +356,7 @@ function Loan() {
                         </label>
                         <br/>
                         <div className = "form-group">
-                        <FormControl className={classes.formControl}>
+                        {/*<FormControl className={classes.formControl}>
                             <NativeSelect
                               className={classes.selectEmpty}
                               value={state.client_Name}
@@ -375,7 +375,7 @@ function Loan() {
                               
                             </NativeSelect>
                             <FormHelperText>Cliente del Prestamo</FormHelperText>
-                          </FormControl>
+                              </FormControl>*/}
                         </div>
                         <div className = "form-group">
                         <FormControl className={classes.formControl}>
